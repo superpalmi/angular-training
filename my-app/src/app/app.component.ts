@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my-app';
+  title = 'Io sono il titolo di app component';
+
+  // tslint:disable-next-line:typedef
+  clickHandler() {
+    alert('sono stato cliccato');
+  }
 }
