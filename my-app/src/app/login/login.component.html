@@ -1,0 +1,22 @@
+<div *ngIf='!auth'>  {{msg}} </div>
+
+
+<div class="container" style="text-align: center">
+  <label for="userName"> UserName: </label>
+  <input type="text" id="userName" placeholder="Username" [(ngModel)]="userName" >
+  <label for="password"> Password </label>
+  <input type="password" id="password" placeholder="Password" [(ngModel)]="password" >
+  <button (click)="gestAuth()">Login</button>
+</div>
+
+<div *ngIf='auth'>  {{msg}} </div>
+<!--
+<br>
+<br>
+
+<p>
+  Il tuo userName è {{userName}} e la tua password è {{password}}
+</p>
+
+-->
+
