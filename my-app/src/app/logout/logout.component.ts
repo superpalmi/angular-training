@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import {AuthappService} from '../services/authapp.service';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-logout',
+  templateUrl: './logout.component.html',
+  styleUrls: ['./logout.component.css']
 })
-export class UserComponent implements OnInit {
-
+export class LogoutComponent implements OnInit {
 
   constructor(public Auth:AuthappService) { }
 
   ngOnInit(): void {
+    this.Auth.clearAll();
   }
 
 }

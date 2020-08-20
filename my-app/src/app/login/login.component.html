@@ -1,15 +1,41 @@
-<div *ngIf='!auth'>  {{msg}} </div>
 
 
-<div class="container" style="text-align: center">
-  <label for="userName"> UserName: </label>
-  <input type="text" id="userName" placeholder="Username" [(ngModel)]="userName" >
-  <label for="password"> Password </label>
-  <input type="password" id="password" placeholder="Password" [(ngModel)]="password" >
-  <button (click)="gestAuth()">Login</button>
+
+
+<div class="container form-control" *ngIf="!Auth.isLogged()" style="text-align: center">
+<div class="row">
+
+  <div class="col-md-6">
+
+    <div class="form-group" style="align-content: center">
+
+      <input type="text" id="userName" placeholder="Username" [(ngModel)]="userName" class="form-control" >
+
+    </div>
+    <div class="form-group" style="text-align: center">
+      <input type="password" id="password" placeholder="Password" [(ngModel)]="password" class="form-control">
+
+    </div>
+    <div>
+
+      <p class="alert-danger" *ngIf='!auth'>  {{msg}} </p>
+
+    </div>
+    <app-button class="btn btn-primary" (notify)="gestAuth()">Login</app-button>
+    <!--<button class="btn btn-primary"  (click)="gestAuth()">Login</button>-->
+
+
+  </div>
 </div>
 
-<div *ngIf='auth'>  {{msg}} </div>
+
+
+</div>
+
+
+
+
+
 <!--
 <br>
 <br>

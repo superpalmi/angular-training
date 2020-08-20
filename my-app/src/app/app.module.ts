@@ -13,14 +13,18 @@ import { VehiclesComponent } from './vehicles/vehicles.component';
 import { ButtonComponent } from './button/button.component';
 import { JumbotronComponent } from './jumbotron/jumbotron.component';
 import { TableComponent } from './table/table.component';
+import { LogoutComponent } from './logout/logout.component';
+import {RouteGuardService} from './services/route-guard.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
   {path: '', component: LoginComponent},
-  {path: 'welcome/:userName', component: WelcomeComponent},
-  {path: 'vehicles', component: VehiclesComponent},
-  {path: 'user', component: UserComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'welcome/:userName', component: WelcomeComponent, canActivate:[RouteGuardService]},
+  {path: 'vehicles', component: VehiclesComponent, canActivate:[RouteGuardService]},
+  {path: 'user', component: UserComponent, canActivate:[RouteGuardService]},
+  {path: 'logout', component: LogoutComponent},
   {path: '**', component: ErrorComponent}
 
 
@@ -39,13 +43,15 @@ const routes: Routes = [
     VehiclesComponent,
     ButtonComponent,
     JumbotronComponent,
-    TableComponent
+    TableComponent,
+    LogoutComponent
   ],
   // qui importo i moduli per angular
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
