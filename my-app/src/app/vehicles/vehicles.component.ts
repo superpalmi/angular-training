@@ -6,6 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicles.component.css']
 })
 export class VehiclesComponent implements OnInit {
+  rowData: any[];
+
+  colData = [
+    {field: 'id', header: 'Id' },
+    {field: 'brand', header: 'Brand'},
+    {field: 'date', header: 'Data di Immatricolazione'},
+    {field: 'model', header: 'Model'},
+    {field: 'plate', header: 'Plate'},
+    {field: 'type', header: 'Type'}
+  ];
 
   vehicles = [
     new Vehicle(13, 'Fiat', new Date('2020-07-30'), 'punto' , 'FA585MA', 'berlina'),
@@ -18,6 +28,7 @@ export class VehiclesComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.rowData = this.vehicles;
   }
 
 }

@@ -11,6 +11,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { ErrorComponent } from './error/error.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
 import { ButtonComponent } from './button/button.component';
+import { JumbotronComponent } from './jumbotron/jumbotron.component';
+import { TableComponent } from './table/table.component';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
@@ -35,7 +37,9 @@ const routes: Routes = [
     WelcomeComponent,
     ErrorComponent,
     VehiclesComponent,
-    ButtonComponent
+    ButtonComponent,
+    JumbotronComponent,
+    TableComponent
   ],
   // qui importo i moduli per angular
   imports: [
