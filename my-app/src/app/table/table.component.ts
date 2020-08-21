@@ -12,6 +12,7 @@ export class TableComponent implements OnInit {
   @Input('rowData') rowData: any;
   @Input('order') order:Order;
   @Input('search') search:Search;
+  @Input('pagination') pagination:Pagination;
   @Output() notify: EventEmitter<any>=new EventEmitter<any>();
   onClick(event) {
     console.log(event)
@@ -28,6 +29,10 @@ export class TableComponent implements OnInit {
 
 export class ColData{
   headers:HeaderData[];
+}
+export class Pagination{
+  itemPerPage:number;
+  itemPerPageOptions:number[];
 }
 
 export class HeaderData{

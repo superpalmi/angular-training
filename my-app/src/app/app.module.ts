@@ -22,6 +22,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { FooterComponent } from './common/footer/footer.component';
 import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
@@ -62,7 +64,9 @@ const routes: Routes = [
     MatSliderModule,
     MatButtonModule,
     MatIconModule,
-    MatSortModule
+    MatSortModule,
+    MatPaginatorModule,
+    OverlayModule
   ],
   providers: [],
   bootstrap: [AppComponent]
