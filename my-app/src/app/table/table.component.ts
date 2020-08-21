@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-table',
@@ -9,11 +10,17 @@ export class TableComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
   @Input('colData') colData: ColData;
   @Input('rowData') rowData: any;
+  @Output() notify: EventEmitter<any>=new EventEmitter<any>();
+  onClick(event) {
+    console.log(event)
+    this.notify.emit(event);
+  }
 
   constructor() { }
 
   ngOnInit(): void {
   }
+
 
 }
 

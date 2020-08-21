@@ -1,2 +1,2 @@
 <h1> Veicoli Disponibili</h1>
-<app-table [colData]="{'headers':headerData}" [rowData]="rowData"></app-table>
+<app-table  [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)"></app-table>

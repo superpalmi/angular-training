@@ -21,6 +21,7 @@ import {MatEndDate} from '@angular/material/datepicker';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { FooterComponent } from './common/footer/footer.component';
+import {MatSortModule} from '@angular/material/sort';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
@@ -60,7 +61,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MatSliderModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
