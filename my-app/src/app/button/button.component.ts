@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
+
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
@@ -7,6 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class ButtonComponent implements OnInit {
   // @ts-ignore
+  @Input() buttonConfig:MyButtonConfig;
   @Output() notify: EventEmitter<any>=new EventEmitter<any>();
 
   onClick(event){
@@ -18,7 +20,17 @@ export class ButtonComponent implements OnInit {
   ngOnInit(): void{
   };
 
+
+
+
 }
+
+export class MyButtonConfig {
+  customCssClass : string ;
+  text : string ;
+  icon : string ;
+
+};
 
 
 

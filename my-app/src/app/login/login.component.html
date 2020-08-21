@@ -21,7 +21,7 @@
       <p class="alert-danger" *ngIf='!auth'>  {{msg}} </p>
 
     </div>
-    <app-button class="btn btn-primary" (notify)="gestAuth()">Login</app-button>
+    <app-button class="btn btn-primary" [buttonConfig]="{'customCssClass':'','text':'login','icon':'home'}" (notify)="gestAuth()"></app-button>
     <!--<button class="btn btn-primary"  (click)="gestAuth()">Login</button>-->
 
 

@@ -1,5 +1,7 @@
 <div (click)="onClick($event)">
-  <button class="btn btn-primary">
+  <button [ngStyle]="buttonConfig.customCssClass" class="btn btn-primary">
+    <mat-icon>{{buttonConfig.icon}}</mat-icon>
+    {{buttonConfig.text}}
     <ng-content></ng-content>
   </button>
 
