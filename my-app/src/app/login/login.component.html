@@ -2,17 +2,18 @@
 
 
 
-<div class="container-fluid form-control mat-elevation-z8" *ngIf="!Auth.isLogged()" style="text-align: center">
-<div class="row">
+<div class="container form-control mat-elevation-z8 col-sm-6" *ngIf="!Auth.isLogged()" style="text-align: center">
 
-  <div class="col-sm-12" >
+  <h3>Effettua il Login</h3>
 
-    <div class="form-group" style="align-content: center">
-
+    <div class="form-group" >
+      <label>Inserisci l'Username</label>
       <input type="text" id="userName" placeholder="Username" [(ngModel)]="userName" class="form-control" style="text-align: center" >
 
     </div>
-    <div class="form-group" style="text-align: center">
+
+    <div class="form-group" >
+      <label>Inserisci la Password</label>
       <input type="password" id="password" placeholder="Password" [(ngModel)]="password" class="form-control" style="text-align: center">
 
     </div>
@@ -21,12 +22,8 @@
       <p class="alert-danger" *ngIf='!auth'>  {{msg}} </p>
 
     </div>
-    <app-button [buttonConfig]="{'customCssClass':'','text':'login','icon':'home'}" (notify)="gestAuth()"></app-button>
+    <app-button [buttonConfig]="{'customCssClass':'','text':'Login','icon':'home'}" (notify)="gestAuth()"></app-button>
     <!--<button class="btn btn-primary"  (click)="gestAuth()">Login</button>-->
-
-
-  </div>
-</div>
 
 
 
