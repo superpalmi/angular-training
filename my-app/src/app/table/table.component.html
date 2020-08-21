@@ -4,7 +4,7 @@
 <table id="vehicles" border="1" class="table table-striped table-bordered table-sm">
   <thead>
   <tr>
-   <th *ngFor="let key of colData">{{key.header}}</th>
+   <th *ngFor="let key of colData.headers">{{key.label}}</th>
 
   </tr>
   </thead>
@@ -12,8 +12,8 @@
   <tbody>
   <tr *ngFor="let record of rowData">
 
-    <td *ngFor="let key of colData">
-      <span>{{record[key.field]}}</span>
+    <td *ngFor="let col of colData.headers">
+      <span>{{record[col.key]}}</span>
     </td>
 
 

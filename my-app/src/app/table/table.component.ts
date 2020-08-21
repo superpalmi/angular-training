@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TableComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
-  @Input('colData') colData: any;
+  @Input('colData') colData: ColData;
   @Input('rowData') rowData: any;
 
   constructor() { }
@@ -15,4 +15,13 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
   }
 
+}
+
+export class ColData{
+  headers:HeaderData[];
+}
+
+export class HeaderData{
+  key:string;
+  label:string;
 }

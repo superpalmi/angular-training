@@ -8,13 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class VehiclesComponent implements OnInit {
   rowData: any[];
 
-  colData = [
-    {field: 'id', header: 'Id' },
-    {field: 'brand', header: 'Brand'},
-    {field: 'date', header: 'Data di Immatricolazione'},
-    {field: 'model', header: 'Model'},
-    {field: 'plate', header: 'Plate'},
-    {field: 'type', header: 'Type'}
+  headerData = [
+    {key: 'id', label: 'Id' },
+    {key: 'brand', label: 'Brand'},
+    {key: 'date', label: 'Data di Immatricolazione'},
+    {key: 'model', label: 'Model'},
+    {key: 'plate', label: 'Plate'},
+    {key: 'type', label: 'Type'}
   ];
 
   vehicles = [
