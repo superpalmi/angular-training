@@ -1,6 +1,6 @@
 
 
-<table matSort (matSortChange)="onClick($event)" id="vehicles" border="1" class="table table-striped table-bordered table-sm">
+<table mat-table matSort (matSortChange)="onClick($event)" id="vehicles" border="1" class="table table-striped table-bordered table-sm" matSortActive="{{order.defaultColumn}}" matSortDirection="{{order.orderType}}">
   <thead>
   <tr>
    <th mat-sort-header="{{key.label}}" *ngFor="let key of colData.headers">{{key.label}}</th>

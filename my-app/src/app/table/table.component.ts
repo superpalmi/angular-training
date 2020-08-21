@@ -10,6 +10,8 @@ export class TableComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
   @Input('colData') colData: ColData;
   @Input('rowData') rowData: any;
+  @Input('order') order:Order;
+  @Input('search') search:Search;
   @Output() notify: EventEmitter<any>=new EventEmitter<any>();
   onClick(event) {
     console.log(event)
@@ -31,4 +33,13 @@ export class ColData{
 export class HeaderData{
   key:string;
   label:string;
+}
+
+export class Order{
+  defaultColumn:string;
+  orderType:string;
+}
+export class Search{
+  columns:string[];
+
 }
