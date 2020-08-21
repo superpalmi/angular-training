@@ -20,6 +20,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import {MatEndDate} from '@angular/material/datepicker';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { FooterComponent } from './common/footer/footer.component';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
@@ -48,7 +49,8 @@ const routes: Routes = [
     ButtonComponent,
     JumbotronComponent,
     TableComponent,
-    LogoutComponent
+    LogoutComponent,
+    FooterComponent
   ],
   // qui importo i moduli per angular
   imports: [
