@@ -1,29 +1,97 @@
 
-<div class="mat-elevation-z8">
+<div class="row h-100">
+  <div class="container">
+    <div class="mat-elevation-z8 h-100">
+      <input type="text" id="search"  [(ngModel)]="searchText" placeholder="Ricerca nella colonna">
+      <select class="custom-select" [(ngModel)]="column" >
+        <option *ngFor="let col of search.columns"   >
+          {{col}}
+        </option>
+      </select>
+      <div class="btn-group">
+
+        <div class="dropdown-menu">
+          <div class="dropdown-menu" >
+
+          </div>
+        </div>
+      </div>
+
+      <table mat-table matSort (matSortChange)="onClick($event)" id="table" border="1" class="table table-striped table-bordered table-sm mh-100" matSortActive="{{order.defaultColumn}}" matSortDirection="{{order.orderType}}">
+        <thead>
+        <tr>
+          <th mat-sort-header="{{key.label}}" *ngFor="let key of colData.headers">{{key.label}}</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let record of rowData | search : searchText : column | pagination: pagination.itemPerPage : currentPage :pages">
+
+          <td *ngFor="let col of colData.headers">
+            <span>{{record[col.key]}}</span>
+          </td>
 
 
-<table mat-table matSort (matSortChange)="onClick($event)" id="vehicles" border="1" class="table table-striped table-bordered table-sm" matSortActive="{{order.defaultColumn}}" matSortDirection="{{order.orderType}}">
-  <thead>
-  <tr>
-   <th mat-sort-header="{{key.label}}" *ngFor="let key of colData.headers">{{key.label}}</th>
 
-  </tr>
-  </thead>
-
-  <tbody>
-  <tr *ngFor="let record of rowData">
-
-    <td *ngFor="let col of colData.headers">
-      <span>{{record[col.key]}}</span>
-    </td>
+        </tr>
 
 
+        </tbody>
 
-  </tr>
+      </table>
 
 
-  </tbody>
+      <div class="container">
+        <div class="text-center">
+          <label ngDefaultControl  [(ngModel)]="pagination.itemPerPage">Scegli il numero di elementi per pagina da visualizzare:</label>
 
-</table>
-<mat-paginator  [pageSize]="pagination.itemPerPage"  [pageSizeOptions]="pagination.itemPerPageOptions" showFirstLastButtons></mat-paginator>
+          <select  ngDefaultControl [(ngModel)]="pagination.itemPerPage" >
+            <option *ngFor="let item of pagination.itemPerPageOptions" >{{item}}</option>
+          </select>
+
+          <!-- pager -->
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" (click)="setCurrentPage(1)">First</a>
+            </li>
+            <li class="page-item disabled">
+              <a class="page-link " *ngIf="currentPage==1" disabled (click)="setCurrentPage(currentPage - 1)">Previous</a>
+
+
+            </li>
+            <li class="page-item">
+              <a class="page-link " *ngIf="currentPage>1" d (click)="setCurrentPage(currentPage - 1)">Previous</a>
+
+
+            </li>
+            <li class="page-item" *ngIf="pages>1">
+              <a class="page-link" (click)="setCurrentPage(currentPage+1)">{{currentPage+1}}</a>
+            </li>
+            <li class="page-item" *ngIf="pages>2">
+            <a class="page-link" (click)="setCurrentPage(currentPage+2)">{{currentPage+2}}</a>
+            </li>
+            <li class="page-item" *ngIf="currentPage<pages" >
+              <a class="page-link" (click)="setCurrentPage(currentPage + 1)">Next</a>
+            </li>
+            <li class="page-item disabled" *ngIf="currentPage==pages">
+              <a class="page-link" (click)="setCurrentPage(currentPage + 1)">Next</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" (click)="setCurrentPage(pages)">Last</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
 </div>
+
+
+
+

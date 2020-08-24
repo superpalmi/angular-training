@@ -24,6 +24,8 @@ import { FooterComponent } from './common/footer/footer.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { SearchPipe } from './table/search.pipe';
+import { PaginationPipe } from './table/pagination.pipe';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
@@ -53,7 +55,9 @@ const routes: Routes = [
     JumbotronComponent,
     TableComponent,
     LogoutComponent,
-    FooterComponent
+    FooterComponent,
+    SearchPipe,
+    PaginationPipe
   ],
   // qui importo i moduli per angular
   imports: [
