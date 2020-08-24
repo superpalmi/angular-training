@@ -13,7 +13,7 @@ export class VehiclesComponent implements OnInit {
   headerData = [
     {key: 'id', label: 'Id' },
     {key: 'brand', label: 'Brand'},
-    {key: 'date', label: 'DataImm'},
+    {key: 'immdate', label: 'DataImm'},
     {key: 'model', label: 'Model'},
     {key: 'plate', label: 'Plate'},
     {key: 'type', label: 'Type'}

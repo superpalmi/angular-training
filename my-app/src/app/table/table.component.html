@@ -29,7 +29,7 @@
         <tr *ngFor="let record of rowData | search : searchText : column | pagination: pagination.itemPerPage : currentPage :pages">
 
           <td *ngFor="let col of colData.headers">
-            <span>{{record[col.key]}}</span>
+            <span>{{record[col.key] }}</span>
           </td>
 
 
@@ -61,7 +61,7 @@
 
             </li>
             <li class="page-item">
-              <a class="page-link " *ngIf="currentPage>1" d (click)="setCurrentPage(currentPage - 1)">Previous</a>
+              <a class="page-link " *ngIf="currentPage>1"  (click)="setCurrentPage(currentPage - 1)">Previous</a>
 
 
             </li>
