@@ -29,7 +29,7 @@
         <tr *ngFor="let record of rowData | search : searchText : column | pagination: pagination.itemPerPage : currentPage :pages">
 
           <td *ngFor="let col of colData.headers">
-            <span>{{record[col.key] }}</span>
+            <span>{{record[col.key] | typeselector }}</span>
           </td>
 
 

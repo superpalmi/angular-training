@@ -26,6 +26,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { SearchPipe } from './table/search.pipe';
 import { PaginationPipe } from './table/pagination.pipe';
+import { TypeselectorPipe } from './table/typeselector.pipe';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
@@ -57,7 +58,8 @@ const routes: Routes = [
     LogoutComponent,
     FooterComponent,
     SearchPipe,
-    PaginationPipe
+    PaginationPipe,
+    TypeselectorPipe
   ],
   // qui importo i moduli per angular
   imports: [
