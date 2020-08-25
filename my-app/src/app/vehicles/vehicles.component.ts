@@ -8,6 +8,8 @@ import {Sort} from '@angular/material/sort';
 })
 export class VehiclesComponent implements OnInit {
   rowData: any[];
+  editvehicle: any;
+  deletevehicle: any;
 
 
   headerData = [
@@ -31,6 +33,53 @@ export class VehiclesComponent implements OnInit {
 
   ngOnInit(): void {
     this.rowData = this.vehicles.slice();
+  }
+
+  eventHandler(event){
+    var action=event.action;
+    var item=event.item;
+    console.log('sono event handler ' + action)
+    switch(action){
+      case 'NEW_ROW':{
+        this.create();
+      }
+      case 'EDIT':{
+        this.edit(item);
+      }
+      case 'DELETE':{
+        this.delete(item);
+      }
+      default:{
+        console.log('error');
+        break;
+      }
+    }
+  }
+  create(){
+    this.vehicles.push(new Vehicle(16, 'BMW', new Date('2020-06-01'), 'Serie 3', 'GL666AA', 'berlina'));
+    this.rowData=this.vehicles.slice();
+    console.log('sto creandoooo');
+
+  }
+  edit(vehicle:Vehicle){
+    this.editvehicle=vehicle;
+    if(this.rowData.includes(vehicle)){
+    console.log('sto modificandoooo');
+      //modificare il veicolo
+      var index=this.rowData.indexOf(vehicle);
+      this.rowData[index]=vehicle;
+
+    }
+
+  }
+  delete(vehicle:Vehicle){
+    this.deletevehicle=vehicle;
+    if(this.rowData.includes(vehicle)){
+      console.log('sto cancellandooo');
+      var index=this.rowData.indexOf(vehicle);
+       this.rowData.splice(index, 1 );
+    }
+
   }
 
   sortData(sort: Sort) {

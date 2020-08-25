@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, Pipe} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, Pipe, ChangeDetectorRef} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 
 @Component({
@@ -13,12 +13,15 @@ export class TableComponent implements OnInit {
   @Input('order') order:Order;
   @Input('search') search:Search;
   @Input('pagination') pagination:Pagination;
+  @Output('notify') notify: EventEmitter<any>=new EventEmitter<any>();
+  @Output('action') action: EventEmitter<any>=new EventEmitter<any>();
+  tableAction:TableActions;
+
   searchText='';
   column='';
   columnIndex=0;
   currentPage=0;
   pages=0;
-  @Output() notify: EventEmitter<any>=new EventEmitter<any>();
   onClick(event) {
     console.log(event)
     this.notify.emit(event);
@@ -49,6 +52,47 @@ export class TableComponent implements OnInit {
     return arr;
   }
 
+  setTableAction(action:string, event, item:any){
+    console.log('table action '+ this.tableAction)
+    console.log('sono entrato in set table action con azione ' + action);
+    if(action==TableActions.NEW_ROW){
+      console.log('inserisco nuova riga')
+      this.create(event, action, item);
+    }else if(action==TableActions.EDIT){
+      console.log('modifico riga')
+      this.edit(event,action, item);
+    }else if(action==TableActions.DELETE){
+      console.log('elimino riga')
+      this.delete(event,action, item);
+    }
+
+
+
+  }
+
+  create(event,action:string, item:any){
+    this.action.emit({event,action, item});
+  }
+  edit(event,action:string, item:any){
+    this.action.emit({event,action, item});
+
+  }
+  delete(event,action:string, item:any){
+    this.action.emit({event,action, item});
+    this.rowData=this.rowData.filter(it => it.id!=item.id)
+  }
+
+
+
+
+
+}
+
+
+export enum TableActions{
+  NEW_ROW='NEW_ROW',
+  EDIT='EDIT',
+  DELETE='DELETE'
 
 }
 

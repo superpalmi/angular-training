@@ -2,25 +2,31 @@
 <div class="row h-100">
   <div class="container">
     <div class="mat-elevation-z8 h-100">
-      <input type="text" id="search"  [(ngModel)]="searchText" placeholder="Ricerca nella colonna">
-      <select class="custom-select" [(ngModel)]="column" >
-        <option *ngFor="let col of search.columns"   >
-          {{col}}
-        </option>
-      </select>
-      <div class="btn-group">
-
-        <div class="dropdown-menu">
-          <div class="dropdown-menu" >
-
-          </div>
-        </div>
+      <div class="input-group container-fluid">
+        <input class="input-group" type="text" id="search"  [(ngModel)]="searchText" placeholder="Ricerca nella colonna" style="width: auto">
+        <select class="custom-select" [(ngModel)]="column"  style="width: auto" >
+          <option value="" selected disabled hidden>Choose here</option>
+          <option *ngFor="let col of search.columns"  >
+            {{col}}
+          </option>
+        </select>
       </div>
+
+
 
       <table mat-table matSort (matSortChange)="onClick($event)" id="table" border="1" class="table table-striped table-bordered table-sm mh-100" matSortActive="{{order.defaultColumn}}" matSortDirection="{{order.orderType}}">
         <thead>
         <tr>
           <th mat-sort-header="{{key.label}}" *ngFor="let key of colData.headers">{{key.label}}</th>
+          <th>
+            New
+          </th>
+          <th>
+            Edit
+          </th>
+          <th>
+            Delete
+          </th>
 
         </tr>
         </thead>
@@ -29,8 +35,21 @@
         <tr *ngFor="let record of rowData | search : searchText : column | pagination: pagination.itemPerPage : currentPage :pages">
 
           <td *ngFor="let col of colData.headers">
-            <span>{{record[col.key] | typeselector }}</span>
+            <span>{{record[col.key] | typeselector }}
+            </span>
           </td>
+          <td>
+            <app-button [buttonConfig]="{'customCssClass':'','text':'new row','icon':'control_point'}" (notify)="setTableAction('NEW_ROW', $event, null)"></app-button>
+          </td>
+          <td>
+            <app-button [buttonConfig]="{'customCssClass':'','text':'edit','icon':'edit'}" (notify)="setTableAction('EDIT', $event, record)"></app-button>
+          </td>
+          <td>
+            <app-button [buttonConfig]="{'customCssClass':'','text':'delete','icon':'delete_sweep'}" (notify)="setTableAction('DELETE', $event, record)"></app-button>
+          </td>
+
+
+
 
 
 
@@ -65,10 +84,10 @@
 
 
             </li>
-            <li class="page-item" *ngIf="pages>1">
+            <li class="page-item" *ngIf="pages>1 && currentPage<pages">
               <a class="page-link" (click)="setCurrentPage(currentPage+1)">{{currentPage+1}}</a>
             </li>
-            <li class="page-item" *ngIf="pages>2">
+            <li class="page-item" *ngIf="pages>2 && currentPage<pages-1">
             <a class="page-link" (click)="setCurrentPage(currentPage+2)">{{currentPage+2}}</a>
             </li>
             <li class="page-item" *ngIf="currentPage<pages" >
