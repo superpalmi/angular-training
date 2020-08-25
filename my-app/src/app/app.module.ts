@@ -34,6 +34,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'welcome/:userName', component: WelcomeComponent, canActivate:[RouteGuardService]},
   {path: 'vehicles', component: VehiclesComponent, canActivate:[RouteGuardService]},
+  {path: 'vehicles/register', component: VehiclesComponent, canActivate:[RouteGuardService]},
   {path: 'user', component: UserComponent, canActivate:[RouteGuardService]},
   {path: 'logout', component: LogoutComponent},
   {path: '**', component: ErrorComponent}
@@ -59,7 +60,8 @@ const routes: Routes = [
     FooterComponent,
     SearchPipe,
     PaginationPipe,
-    TypeselectorPipe
+    TypeselectorPipe,
+    //VehicleComponent
   ],
   // qui importo i moduli per angular
   imports: [

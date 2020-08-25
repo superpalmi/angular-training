@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Sort} from '@angular/material/sort';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-vehicles',
@@ -8,8 +9,7 @@ import {Sort} from '@angular/material/sort';
 })
 export class VehiclesComponent implements OnInit {
   rowData: any[];
-  editvehicle: any;
-  deletevehicle: any;
+  newVehicle:Vehicle;
 
 
   headerData = [
@@ -29,10 +29,11 @@ export class VehiclesComponent implements OnInit {
 
   ];
 
-  constructor() { }
+  constructor(private route:Router) { }
 
   ngOnInit(): void {
     this.rowData = this.vehicles.slice();
+    this.newVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '' )
   }
 
   eventHandler(event){
@@ -56,13 +57,17 @@ export class VehiclesComponent implements OnInit {
     }
   }
   create(){
-    this.vehicles.push(new Vehicle(16, 'BMW', new Date('2020-06-01'), 'Serie 3', 'GL666AA', 'berlina'));
+   // this.vehicles.push(new Vehicle(16, 'BMW', new Date('2020-06-01'), 'Serie 3', 'GL666AA', 'berlina'));
+    this.route.navigate(['vehicle/register'])
     this.rowData=this.vehicles.slice();
-    console.log('sto creandoooo');
 
   }
+  insert(){
+    console.log(this.newVehicle.plate)
+  }
+
   edit(vehicle:Vehicle){
-    this.editvehicle=vehicle;
+
     if(this.rowData.includes(vehicle)){
     console.log('sto modificandoooo');
       //modificare il veicolo
@@ -73,7 +78,6 @@ export class VehiclesComponent implements OnInit {
 
   }
   delete(vehicle:Vehicle){
-    this.deletevehicle=vehicle;
     if(this.rowData.includes(vehicle)){
       console.log('sto cancellandooo');
       var index=this.rowData.indexOf(vehicle);
@@ -106,7 +110,6 @@ export class VehiclesComponent implements OnInit {
     });
   }
 
-
 }
 
 function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
@@ -114,17 +117,31 @@ function compare(a: number | string | Date, b: number | string | Date, isAsc: bo
 }
 
 export class Vehicle{
+  public id: number;
+  public brand: string;
+  public immdate: Date;
+  public model: string;
+  public plate: string;
+  public type: string;
 
   constructor(
-    public id: number,
-    public brand: string,
-    public immdate: Date,
-    public model: string,
-    public plate: string,
-    public type: string
-  ) {}
+    id: number,
+    brand: string,
+   immdate: Date,
+     model: string,
+    plate: string,
+     type: string
+  ) {
+    this.id=id;
+    this.brand=brand;
+    this.immdate=immdate;
+    this.model=model;
+    this.plate=plate;
+    this.type=type;
+  }
 
 
 
 
 }
+
