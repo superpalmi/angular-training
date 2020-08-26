@@ -15,8 +15,7 @@ export class TableComponent implements OnInit {
   @Input('pagination') pagination:Pagination;
   @Output('notify') notify: EventEmitter<any>=new EventEmitter<any>();
   @Output('action') action: EventEmitter<any>=new EventEmitter<any>();
-  tableAction:TableActions;
-
+  tableAction = [TableActions.NEW_ROW, TableActions.EDIT, TableActions.DELETE];
   searchText='';
   column='';
   columnIndex=0;
@@ -52,18 +51,18 @@ export class TableComponent implements OnInit {
     return arr;
   }
 
-  setTableAction(action:string, event, item:any){
-    console.log('table action '+ this.tableAction)
-    console.log('sono entrato in set table action con azione ' + action);
-    if(action==TableActions.NEW_ROW){
+  setTableAction(event, item:any){
+    console.log('sono entrato in set table action con azione ');
+    console.log('event action '+ event.action)
+    if(event.action==TableActions.NEW_ROW){
       console.log('inserisco nuova riga')
-      this.create(event, action, item);
-    }else if(action==TableActions.EDIT){
+      this.create(event, event.action, item);
+    }else if(event.action==TableActions.EDIT){
       console.log('modifico riga')
-      this.edit(event,action, item);
-    }else if(action==TableActions.DELETE){
+      this.edit(event,event.action, item);
+    }else if(event.action==TableActions.DELETE){
       console.log('elimino riga')
-      this.delete(event,action, item);
+      this.delete(event,event.action, item);
     }
 
 
@@ -82,6 +81,12 @@ export class TableComponent implements OnInit {
     this.rowData=this.rowData.filter(it => it.id!=item.id)
   }
 
+  getTableAction(action:string){
+    const a:TableActions=TableActions[action];
+    console.log("sono A " + a)
+    return  a
+  }
+
 
 
 
@@ -90,9 +95,10 @@ export class TableComponent implements OnInit {
 
 
 export enum TableActions{
-  NEW_ROW='NEW_ROW',
-  EDIT='EDIT',
-  DELETE='DELETE'
+  NEW_ROW="NEW_ROW",
+  EDIT="EDIT",
+  DELETE="DELETE"
+
 
 }
 

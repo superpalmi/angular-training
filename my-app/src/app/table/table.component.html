@@ -39,13 +39,13 @@
             </span>
           </td>
           <td>
-            <app-button [buttonConfig]="{'customCssClass':'','text':'new row','icon':'control_point'}" (notify)="setTableAction('NEW_ROW', $event, null)"></app-button>
+            <app-button [buttonConfig]="{'customCssClass':'','text':'New Row','icon':'control_point'}" [buttonActions]="tableAction"  (notify)="setTableAction( $event, null)"></app-button>
           </td>
           <td>
-            <app-button [buttonConfig]="{'customCssClass':'','text':'edit','icon':'edit'}" (notify)="setTableAction('EDIT', $event, record)"></app-button>
+            <app-button [buttonConfig]="{'customCssClass':'','text':'Edit','icon':'edit'}" [buttonActions]="tableAction"  (notify)="setTableAction( $event, record)"></app-button>
           </td>
           <td>
-            <app-button [buttonConfig]="{'customCssClass':'','text':'delete','icon':'delete_sweep'}" (notify)="setTableAction('DELETE', $event, record)"></app-button>
+            <app-button [buttonConfig]="{'customCssClass':'','text':'Delete','icon':'delete_sweep'}" [buttonActions]="tableAction" (notify)="setTableAction( $event, record)"></app-button>
           </td>
 
 
