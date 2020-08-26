@@ -16,36 +16,16 @@ export class ButtonComponent implements OnInit {
 
 
   onClick(event){
-    switch (this.buttonConfig.text){
-      case('NEW_ROW'):{
-        this.emitAction(event, this.buttonActions[0])
-      }
-      case('EDIT'):{
-        console.log("ediiiit")
-        this.emitAction(event, this.buttonActions[1])
-      }
-      case('DELETE'):{
-        this.emitAction(event, this.buttonActions[2])
-      }
-      case('Login'):{
-        this.notify.emit(event);
-      }
-      case('Register Vehicle'):{
-        console.log('ora Register Vehicle')
-        this.notify.emit(event);
-      }
-
-      default:{
-        console.log('buttonconfig.text error')
-        break
-      }
-    }
+    this.emitAction(event, this.buttonConfig.text)
 
   }
 
   emitAction(event, action:string){
     console.log('sono button component e questa è action ' + action)
-    this.notify.emit({event, action});
+    if(action!=null){
+      this.notify.emit({event, action});
+    }else this.notify.emit(event);
+
 
   }
 
