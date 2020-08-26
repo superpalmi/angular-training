@@ -31,17 +31,22 @@ export class TableComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    /*
     console.log(this.search.columns)
     console.log(this.column)
     console.log(this.columnIndex)
     console.log('numero item'+ this.rowData.length)
     console.log('items per page' + this.pagination.itemPerPage)
+    */
+
     this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
     console.log('numero pagine' + this.pages)
   }
   setCurrentPage(page: number){
     if(page>1){
       this.currentPage=page;
+      console.log("current page: " + this.currentPage)
+      console.log("number of pages: "+ this.pages)
     }else this.currentPage=1;
 
 
@@ -53,8 +58,8 @@ export class TableComponent implements OnInit {
   }
 
   setTableAction(event, item:any){
-    console.log('sono entrato in set table action con azione ');
-    console.log('event action '+ event.action)
+    //console.log('sono entrato in set table action con azione ');
+    //console.log('event action '+ event.action)
     if(event.action==TableActions.NEW_ROW){
       console.log('inserisco nuova riga')
       this.create(event, event.action, item);
@@ -74,7 +79,7 @@ export class TableComponent implements OnInit {
     this.action.emit({event,action, item});
   }
   edit(event,action:string, item:any){
-    console.log("ediiiiit 2")
+    //console.log("ediiiiit 2")
     this.action.emit({event,action, item});
 
   }

@@ -1,10 +1,10 @@
 <h1> Veicoli Disponibili</h1>
-<app-table (action)="eventHandler($event)" [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':2, 'itemPerPageOptions':[2,5,10,20]}" [search]="{columns:['id','brand','immdate', 'model','plate','type']}"></app-table>
+<app-table (action)="eventHandler($event)" [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','brand','immdate', 'model','plate','type']}"></app-table>
 <br>
 <br>
 
 
-<div class="portlet-body form" *ngIf="isCreation">
+<div class="portlet-body form" *ngIf="isCreation&&!isEditing">
   <h2> Inserisci i dati del veicolo</h2>
   <form>
     {{newVehicle}}
@@ -51,7 +51,7 @@
 
 
 </div>
-<div class="portlet-body form" *ngIf="isEditing">
+<div class="portlet-body form" *ngIf="isEditing&&!isCreation">
   <h2> Inserisci i dati del veicolo</h2>
   <form>
     {{editVehicle}}

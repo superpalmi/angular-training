@@ -38,20 +38,11 @@
             <span>{{record[col.key] | typeselector }}
             </span>
           </td>
-          <td>
-            <app-button [buttonConfig]="{'customCssClass':'','text':'New Row','icon':'control_point'}" [buttonActions]="tableAction"  (notify)="setTableAction( $event, null)"></app-button>
+          <td *ngFor="let action of tableAction">
+            <app-button *ngIf="action=='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}" [buttonActions]="tableAction" (notify)="setTableAction($event, null)"></app-button>
+
+            <app-button *ngIf="action!='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}" [buttonActions]="tableAction" (notify)="setTableAction($event, record)"></app-button>
           </td>
-          <td>
-            <app-button [buttonConfig]="{'customCssClass':'','text':'Edit','icon':'edit'}" [buttonActions]="tableAction"  (notify)="setTableAction( $event, record)"></app-button>
-          </td>
-          <td>
-            <app-button [buttonConfig]="{'customCssClass':'','text':'Delete','icon':'delete_sweep'}" [buttonActions]="tableAction" (notify)="setTableAction( $event, record)"></app-button>
-          </td>
-
-
-
-
-
 
         </tr>
 
@@ -74,17 +65,16 @@
             <li class="page-item">
               <a class="page-link" (click)="setCurrentPage(1)">First</a>
             </li>
+
             <li class="page-item disabled">
               <a class="page-link " *ngIf="currentPage==1" disabled (click)="setCurrentPage(currentPage - 1)">Previous</a>
-
 
             </li>
             <li class="page-item">
               <a class="page-link " *ngIf="currentPage>1"  (click)="setCurrentPage(currentPage - 1)">Previous</a>
-
-
             </li>
-            <li class="page-item" *ngIf="pages>1 && currentPage<pages">
+
+            <li class="page-item" *ngIf="pages>2 && currentPage<pages">
               <a class="page-link" (click)="setCurrentPage(currentPage+1)">{{currentPage+1}}</a>
             </li>
             <li class="page-item" *ngIf="pages>2 && currentPage<pages-1">
@@ -93,7 +83,7 @@
             <li class="page-item" *ngIf="currentPage<pages" >
               <a class="page-link" (click)="setCurrentPage(currentPage + 1)">Next</a>
             </li>
-            <li class="page-item disabled" *ngIf="currentPage==pages">
+            <li class="page-item disabled" *ngIf="currentPage==pages || pages==1">
               <a class="page-link" (click)="setCurrentPage(currentPage + 1)">Next</a>
             </li>
             <li class="page-item">

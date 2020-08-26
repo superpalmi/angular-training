@@ -17,14 +17,14 @@ export class ButtonComponent implements OnInit {
 
   onClick(event){
     switch (this.buttonConfig.text){
-      case('New Row'):{
+      case('NEW_ROW'):{
         this.emitAction(event, this.buttonActions[0])
       }
-      case('Edit'):{
+      case('EDIT'):{
         console.log("ediiiit")
         this.emitAction(event, this.buttonActions[1])
       }
-      case('Delete'):{
+      case('DELETE'):{
         this.emitAction(event, this.buttonActions[2])
       }
       case('Login'):{

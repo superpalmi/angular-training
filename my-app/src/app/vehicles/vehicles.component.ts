@@ -65,7 +65,10 @@ export class VehiclesComponent implements OnInit {
   //prepara il componente alla creazione
   create(){
    // this.vehicles.push(new Vehicle(16, 'BMW', new Date('2020-06-01'), 'Serie 3', 'GL666AA', 'berlina'));
+    console.log('aperta crazione veicolo')
     this.isCreation=true;
+
+    this.newVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '' )
     this.rowData=this.vehicles.slice();
 
   }
@@ -81,7 +84,7 @@ export class VehiclesComponent implements OnInit {
 
     if(this.rowData.includes(vehicle)){
       this.isEditing=true;
-      console.log('sto modificandoooo');
+      console.log('sto modificandoooo' + vehicle.plate);
       this.oldVehicle=vehicle
       this.editVehicle=this.oldVehicle
 
