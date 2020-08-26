@@ -21,6 +21,7 @@ export class TableComponent implements OnInit {
   columnIndex=0;
   currentPage=0;
   pages=0;
+
   onClick(event) {
     console.log(event)
     this.notify.emit(event);
@@ -73,6 +74,7 @@ export class TableComponent implements OnInit {
     this.action.emit({event,action, item});
   }
   edit(event,action:string, item:any){
+    console.log("ediiiiit 2")
     this.action.emit({event,action, item});
 
   }
@@ -81,11 +83,6 @@ export class TableComponent implements OnInit {
     this.rowData=this.rowData.filter(it => it.id!=item.id)
   }
 
-  getTableAction(action:string){
-    const a:TableActions=TableActions[action];
-    console.log("sono A " + a)
-    return  a
-  }
 
 
 

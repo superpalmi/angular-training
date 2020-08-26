@@ -10,6 +10,10 @@ import {Router} from '@angular/router';
 export class VehiclesComponent implements OnInit {
   rowData: any[];
   newVehicle:Vehicle;
+  oldVehicle:Vehicle;
+  editVehicle:Vehicle;
+  isCreation=false;
+  isEditing=false;
 
 
   headerData = [
@@ -34,6 +38,8 @@ export class VehiclesComponent implements OnInit {
   ngOnInit(): void {
     this.rowData = this.vehicles.slice();
     this.newVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '' )
+    this.oldVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '' )
+    this.editVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '' )
   }
 
   eventHandler(event){
@@ -56,27 +62,45 @@ export class VehiclesComponent implements OnInit {
       }
     }
   }
+  //prepara il componente alla creazione
   create(){
    // this.vehicles.push(new Vehicle(16, 'BMW', new Date('2020-06-01'), 'Serie 3', 'GL666AA', 'berlina'));
-    this.route.navigate(['vehicle/register'])
+    this.isCreation=true;
     this.rowData=this.vehicles.slice();
 
   }
+  //inserisce il nuovo veicolo
   insert(){
     console.log(this.newVehicle.plate)
+    this.vehicles.push(this.newVehicle)
+    this.rowData=this.vehicles
+    this.isCreation=false;
   }
-
+  //prepara il componente alla modifica di un elemento
   edit(vehicle:Vehicle){
 
     if(this.rowData.includes(vehicle)){
-    console.log('sto modificandoooo');
-      //modificare il veicolo
-      var index=this.rowData.indexOf(vehicle);
-      this.rowData[index]=vehicle;
+      this.isEditing=true;
+      console.log('sto modificandoooo');
+      this.oldVehicle=vehicle
+      this.editVehicle=this.oldVehicle
+
 
     }
 
   }
+  //modifica il veicolo
+  modify(){
+    var index = this.vehicles.indexOf(this.oldVehicle);
+
+    if (index !== -1) {
+      this.vehicles[index] = this.editVehicle;
+      this.rowData=this.vehicles
+    }
+    this.isEditing=false;
+  }
+
+ //elimina il veicolo
   delete(vehicle:Vehicle){
     if(this.rowData.includes(vehicle)){
       console.log('sto cancellandooo');
@@ -85,7 +109,7 @@ export class VehiclesComponent implements OnInit {
     }
 
   }
-
+  //ordina l'array di veicoli
   sortData(sort: Sort) {
     console.log('im sorting')
 

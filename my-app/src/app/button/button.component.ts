@@ -21,11 +21,20 @@ export class ButtonComponent implements OnInit {
         this.emitAction(event, this.buttonActions[0])
       }
       case('Edit'):{
+        console.log("ediiiit")
         this.emitAction(event, this.buttonActions[1])
       }
       case('Delete'):{
         this.emitAction(event, this.buttonActions[2])
       }
+      case('Login'):{
+        this.notify.emit(event);
+      }
+      case('Register Vehicle'):{
+        console.log('ora Register Vehicle')
+        this.notify.emit(event);
+      }
+
       default:{
         console.log('buttonconfig.text error')
         break

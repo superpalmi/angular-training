@@ -4,7 +4,7 @@
 <br>
 
 
-<div class="portlet-body form">
+<div class="portlet-body form" *ngIf="isCreation">
   <h2> Inserisci i dati del veicolo</h2>
   <form>
     {{newVehicle}}
@@ -47,5 +47,54 @@
       </div>
     </div>
   </form>
+  <app-button *ngIf="isCreation" [buttonConfig]="{'customCssClass':'','text':'Register Vehicle','icon':'directions_car'}" (notify)="insert()"></app-button>
+
+
 </div>
-<app-button [buttonConfig]="{'customCssClass':'','text':'Register Vehicle','icon':'directions_car'}" (notify)="insert()"></app-button>
+<div class="portlet-body form" *ngIf="isEditing">
+  <h2> Inserisci i dati del veicolo</h2>
+  <form>
+    {{editVehicle}}
+    <div class="form-body">
+      <div class="form-group">
+        <label for="id">Id</label>
+        <input name="id" path="id" type="text" class="form-control" placeholder="Id" [(ngModel)]="editVehicle.id"/>
+
+      </div>
+
+
+      <div class="form-group">
+        <label for="brand">Brand</label>
+        <input  name="brand" path="brand" type="text" class="form-control" placeholder="Brand"  [(ngModel)]="editVehicle.brand" />
+
+      </div>
+
+      <div class="form-group">
+        <label for="model">Model</label>
+        <input  name="model"  path="model" type="text" class="form-control" placeholder="Model"  [(ngModel)]="editVehicle.model"/>
+      </div>
+      <div class="form-group">
+        <label for="immdate">Data di Immatricolazione</label>
+        <input  name="immdate" path="immdate" type="date" class="form-control" placeholder="immdate"  [(ngModel)]="editVehicle.immdate" />
+      </div>
+
+
+      <div class="form-group">
+        <label for="plate">plate</label>
+        <input  name="plate" path="plate" type="text" class="form-control" placeholder="plate"  [(ngModel)]="editVehicle.plate"/>
+      </div>
+      <div class="form-group">
+        <label for="type">Tipo</label>
+        <select path="type" name="type" class="form-control"  [(ngModel)]="editVehicle.type">
+          <option value="berlina" label="berlina"></option>
+          <option value="suv" label="suv" ></option>
+          <option value="furgone" label="furgone"></option>
+          <option value="tir" label="tir"></option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <app-button *ngIf="isEditing" [buttonConfig]="{'customCssClass':'','text':'Register Vehicle','icon':'directions_car'}" (notify)="modify()"></app-button>
+
+</div>
