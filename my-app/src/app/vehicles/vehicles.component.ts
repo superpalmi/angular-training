@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {Router} from '@angular/router';
+import {Reservation} from '../reservation/reservation.component';
+import {DatePipe, formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-vehicles',
@@ -8,12 +10,13 @@ import {Router} from '@angular/router';
   styleUrls: ['./vehicles.component.css']
 })
 export class VehiclesComponent implements OnInit {
-  rowData: any[];
+  rowData: Vehicle[]=[];
   newVehicle:Vehicle;
   oldVehicle:Vehicle;
   editVehicle:Vehicle;
   isCreation=false;
   isEditing=false;
+  @Input('reservation') reservation: Reservation;
 
 
   headerData = [
@@ -26,9 +29,9 @@ export class VehiclesComponent implements OnInit {
   ];
 
   vehicles = [
-    new Vehicle(13, 'Fiat', new Date('2020-07-30'), 'punto' , 'FA585MA', 'berlina'),
-    new Vehicle(14, 'Fiat', new Date('2020-07-28'), 'Freemont' , 'CA444CA', 'suv'),
-    new Vehicle(15, 'Fiat', new Date('2020-07-01'), 'Panda' , 'EA666PA', 'berlina')
+    new Vehicle(13, 'Fiat', new Date(2020,7,30) , 'punto' , 'FA585MA', 'berlina', [{'id':1,'dataInizio': new Date(2020,7,30), 'dataFine': new Date(2020,7,31)}]),
+    new Vehicle(14, 'Fiat', new Date(2020,7,28), 'Freemont' , 'CA444CA', 'suv', [{'id':2,'dataInizio':new Date(2020,9,28), 'dataFine': new Date(2020,9,30)},{'id':3,'dataInizio':new Date(2020,10,1), 'dataFine': new Date(2020,10,5)}]),
+    new Vehicle(15, 'Fiat', new Date('2020-07-01'), 'Panda' , 'EA666PA', 'berlina', [])
 
 
   ];
@@ -36,10 +39,47 @@ export class VehiclesComponent implements OnInit {
   constructor(private route:Router) { }
 
   ngOnInit(): void {
-    this.rowData = this.vehicles.slice();
-    this.newVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '' )
-    this.oldVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '' )
-    this.editVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '' )
+    console.log("la reservation inserita è " + this.reservation.dataInizio)
+    this.checkReservation();
+    this.newVehicle=new Vehicle(0, '',new Date(2020,7,30), '', '', '' , [])
+    this.oldVehicle=new Vehicle(0, '', new Date(2020,7,30), '', '', '' , [])
+    this.editVehicle=new Vehicle(0, '', new Date(2020,7,30), '', '', '' , [])
+  }
+  isBooked(vehicle:Vehicle){
+    var isBooked:boolean = false;
+    for(let reservation of vehicle.reservations)
+    {
+      if(((this.reservation.dataInizio<reservation.dataInizio && this.reservation.dataFine<reservation.dataInizio)||(this.reservation.dataInizio>reservation.dataFine && this.reservation.dataFine>reservation.dataFine))){
+          console.log(this.reservation.dataInizio + ' < ' + reservation.dataInizio)
+        isBooked=false;
+      }else{
+        console.log('prenotazione già esistente' + reservation.dataInizio + ' prenotazione inserita :' + this.reservation.dataInizio)
+        isBooked=true;
+
+      }
+
+
+    }
+    return isBooked;
+
+  }
+
+
+  checkReservation(){
+
+    if(this.reservation!=null){
+      for( let vehicle of this.vehicles)
+      {
+        if(!this.isBooked(vehicle)){
+          console.log('veicolo prenotabile')
+          this.rowData.push(vehicle);
+        }
+
+      }
+    }else{
+      this.rowData=this.vehicles;
+    }
+
   }
 
   eventHandler(event){
@@ -69,7 +109,7 @@ export class VehiclesComponent implements OnInit {
     this.isCreation=true;
     this.isEditing=false;
 
-    this.newVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '' )
+    this.newVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '', [] )
     this.rowData=this.vehicles.slice();
 
   }
@@ -151,6 +191,7 @@ export class Vehicle{
   public model: string;
   public plate: string;
   public type: string;
+  public reservations: Reservation[];
 
   constructor(
     id: number,
@@ -158,7 +199,8 @@ export class Vehicle{
    immdate: Date,
      model: string,
     plate: string,
-     type: string
+     type: string,
+    reservations: Reservation[],
   ) {
     this.id=id;
     this.brand=brand;
@@ -166,6 +208,7 @@ export class Vehicle{
     this.model=model;
     this.plate=plate;
     this.type=type;
+    this.reservations=reservations;
   }
 
 

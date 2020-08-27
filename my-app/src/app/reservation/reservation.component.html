@@ -1,0 +1,30 @@
+<p>reservation works!</p>
+<div class="container form-control mat-elevation-z8 col-sm-6" style="text-align: center">
+
+  <h3>Inserisci le date della prenotazione</h3>
+
+  <div class="form-group" >
+    <label>Inserisci la data di inizio</label>
+    <input type="date" id="dataInizio" placeholder="dataInizio" [ngModel]="reservation.dataInizio | date:'fullDate'"   name="dataInizio" class="form-control" style="text-align: center" >
+
+  </div>
+
+  <div class="form-group" >
+    <label>Inserisci la data di fine</label>
+    <input type="date" id="dataFine" placeholder="dataFine" [ngModel]="reservation.dataFine | date:'fullDate'" name="dataFine" class="form-control" style="text-align: center">
+
+  </div>
+  <div>
+
+
+
+  </div>
+  <app-button [buttonConfig]="{'customCssClass':'','text':'Mostra i veicoli disponibili','icon':'directions_car'}" (notify)="listVehicles($event)"></app-button>
+  <!--<button class="btn btn-primary"  (click)="gestAuth()">Login</button>-->
+  <div >
+    <app-vehicles *ngIf="reserving==true"  [reservation]="reservation"></app-vehicles>
+
+  </div>
+
+
+</div>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './common/header/header.component';
 //import { RentalComponent } from './rental/rental.component';
+import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
@@ -27,11 +28,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { SearchPipe } from './table/search.pipe';
 import { PaginationPipe } from './table/pagination.pipe';
 import { TypeselectorPipe } from './table/typeselector.pipe';
+import { ReservationComponent } from './reservation/reservation.component';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'reservations', component:ReservationComponent, canActivate:[RouteGuardService]},
   {path: 'welcome/:userName', component: WelcomeComponent, canActivate:[RouteGuardService]},
   {path: 'vehicles', component: VehiclesComponent, canActivate:[RouteGuardService]},
   {path: 'vehicles/register', component: VehiclesComponent, canActivate:[RouteGuardService]},
@@ -61,6 +64,7 @@ const routes: Routes = [
     SearchPipe,
     PaginationPipe,
     TypeselectorPipe,
+    ReservationComponent,
     //VehicleComponent
   ],
   // qui importo i moduli per angular
@@ -74,7 +78,8 @@ const routes: Routes = [
     MatIconModule,
     MatSortModule,
     MatPaginatorModule,
-    OverlayModule
+    OverlayModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
