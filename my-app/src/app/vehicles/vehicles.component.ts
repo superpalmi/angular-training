@@ -29,8 +29,8 @@ export class VehiclesComponent implements OnInit {
   ];
 
   vehicles = [
-    new Vehicle(13, 'Fiat', new Date(2020,7,30) , 'punto' , 'FA585MA', 'berlina', [{'id':1,'dataInizio': new Date(2020,7,30), 'dataFine': new Date(2020,7,31)}]),
-    new Vehicle(14, 'Fiat', new Date(2020,7,28), 'Freemont' , 'CA444CA', 'suv', [{'id':2,'dataInizio':new Date(2020,9,28), 'dataFine': new Date(2020,9,30)},{'id':3,'dataInizio':new Date(2020,10,1), 'dataFine': new Date(2020,10,5)}]),
+    new Vehicle(13, 'Fiat',new Date(2020,7,30) , 'punto' , 'FA585MA', 'berlina', [{'id':1,'dataInizio': new Date("2020/09/15"), 'dataFine': new Date("2020/09/17")}]),
+    new Vehicle(14, 'Fiat', new Date(2020,7,28), 'Freemont' , 'CA444CA', 'suv', [{'id':2,'dataInizio':new Date("2020/10/11"), 'dataFine': new Date("2020/10/20")},{'id':3,'dataInizio':new Date("2020/12/24"), 'dataFine': new Date("2020/12/31")}]),
     new Vehicle(15, 'Fiat', new Date('2020-07-01'), 'Panda' , 'EA666PA', 'berlina', [])
 
 
@@ -40,26 +40,29 @@ export class VehiclesComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("la reservation inserita è " + this.reservation.dataInizio)
+
+    console.log("questa è una data " + new Date("2020/09/10"))
     this.checkReservation();
-    this.newVehicle=new Vehicle(0, '',new Date(2020,7,30), '', '', '' , [])
+    this.newVehicle=new Vehicle(0, '',new Date("2020/09/30"), '', '', '' , [])
     this.oldVehicle=new Vehicle(0, '', new Date(2020,7,30), '', '', '' , [])
     this.editVehicle=new Vehicle(0, '', new Date(2020,7,30), '', '', '' , [])
   }
   isBooked(vehicle:Vehicle){
     var isBooked:boolean = false;
-    for(let reservation of vehicle.reservations)
-    {
-      if(((this.reservation.dataInizio<reservation.dataInizio && this.reservation.dataFine<reservation.dataInizio)||(this.reservation.dataInizio>reservation.dataFine && this.reservation.dataFine>reservation.dataFine))){
+    if(vehicle.reservations!=null || vehicle.reservations.length>0) {
+      for (let reservation of vehicle.reservations) {
+        if (((this.reservation.dataInizio < reservation.dataInizio && this.reservation.dataFine < reservation.dataInizio) || (this.reservation.dataInizio > reservation.dataFine && this.reservation.dataFine > reservation.dataFine))) {
           console.log(this.reservation.dataInizio + ' < ' + reservation.dataInizio)
-        isBooked=false;
-      }else{
-        console.log('prenotazione già esistente' + reservation.dataInizio + ' prenotazione inserita :' + this.reservation.dataInizio)
-        isBooked=true;
+          isBooked = false;
+        } else {
+          console.log('prenotazione già esistente' + vehicle.model+ '' +  reservation.dataInizio + ' prenotazione inserita :' + this.reservation.dataInizio )
+          isBooked = true;
+
+        }
+
 
       }
-
-
-    }
+    }else return isBooked
     return isBooked;
 
   }
