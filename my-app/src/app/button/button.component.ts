@@ -10,10 +10,7 @@ import {TableActions} from '../table/table.component';
 export class ButtonComponent implements OnInit {
   // @ts-ignore
   @Input() buttonConfig:MyButtonConfig;
-  @Input() buttonActions:TableActions[];
   @Output() notify: EventEmitter<any>=new EventEmitter<any>();
-  private action:string;
-
 
   onClick(event){
     this.emitAction(event, this.buttonConfig.text)

@@ -1,5 +1,7 @@
 <h1> Veicoli Disponibili</h1>
-<app-table (action)="eventHandler($event)" [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','brand','immdate', 'model','plate','type']}"></app-table>
+<app-table *ngIf="reservation!=null" (action)="eventHandler($event)"  [reusableButton]="reserve" [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','brand','immdate', 'model','plate','type']}"></app-table>
+<app-table *ngIf="reservation==null" (action)="eventHandler($event)"  [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','brand','immdate', 'model','plate','type']}"></app-table>
+
 <br>
 <br>
 

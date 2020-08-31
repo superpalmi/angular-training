@@ -17,6 +17,9 @@
       <table mat-table matSort (matSortChange)="onClick($event)" id="table" border="1" class="table table-striped table-bordered table-sm mh-100" matSortActive="{{order.defaultColumn}}" matSortDirection="{{order.orderType}}">
         <thead>
         <tr>
+          <th *ngIf="reusableButton!=null">
+            Prenota
+          </th>
           <th mat-sort-header="{{key.label}}" *ngFor="let key of colData.headers">{{key.label}}</th>
           <th>
             New
@@ -33,15 +36,18 @@
 
         <tbody>
         <tr *ngFor="let record of rowData | search : searchText : column | pagination: pagination.itemPerPage : currentPage :pages">
+          <app-button *ngIf="reusableButton!=null" [buttonConfig]="{'customCssClass':'','text':[reusableButton],'icon':'control_point'}" (notify)="setTableAction($event, record)" ></app-button>
 
           <td *ngFor="let col of colData.headers">
+
             <span>{{record[col.key] | typeselector }}
             </span>
           </td>
           <td *ngFor="let action of tableAction">
-            <app-button *ngIf="action=='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}" [buttonActions]="tableAction" (notify)="setTableAction($event, null)"></app-button>
 
-            <app-button *ngIf="action!='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}" [buttonActions]="tableAction" (notify)="setTableAction($event, record)"></app-button>
+            <app-button *ngIf="action=='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}"  (notify)="setTableAction($event, null)"></app-button>
+
+            <app-button *ngIf="action!='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}" (notify)="setTableAction($event, record)"></app-button>
           </td>
 
         </tr>

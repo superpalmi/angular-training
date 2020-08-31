@@ -16,6 +16,7 @@ export class VehiclesComponent implements OnInit {
   editVehicle:Vehicle;
   isCreation=false;
   isEditing=false;
+  reserve:string="RESERVE";
   @Input('reservation') reservation: Reservation;
 
 
@@ -39,7 +40,7 @@ export class VehiclesComponent implements OnInit {
   constructor(private route:Router) { }
 
   ngOnInit(): void {
-    console.log("la reservation inserita è " + this.reservation.dataInizio)
+
 
     console.log("questa è una data " + new Date("2020/09/10"))
     this.checkReservation();
@@ -90,6 +91,10 @@ export class VehiclesComponent implements OnInit {
     var item=event.item;
     console.log('sono event handler ' + action)
     switch(action){
+      case 'CUSTOM':{
+        console.log('reservation')
+        this.reserveVehicle(item);
+      }
       case 'NEW_ROW':{
         this.create();
       }
@@ -99,8 +104,19 @@ export class VehiclesComponent implements OnInit {
       case 'DELETE':{
         this.delete(item);
       }
+
       default:{
-        console.log('error');
+        console.log('switch error');
+        break;
+      }
+    }
+  }
+  reserveVehicle(vehicle:Vehicle){
+    console.log("sto riservando")
+    for(let v of this.rowData){
+      if(v==vehicle){
+        v.reservations.push(this.reservation)
+        console.log(v.reservations)
         break;
       }
     }

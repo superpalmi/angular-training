@@ -13,8 +13,10 @@ export class TableComponent implements OnInit {
   @Input('order') order:Order;
   @Input('search') search:Search;
   @Input('pagination') pagination:Pagination;
+  @Input('reusableButton') reusableButton:string;
   @Output('notify') notify: EventEmitter<any>=new EventEmitter<any>();
   @Output('action') action: EventEmitter<any>=new EventEmitter<any>();
+
   tableAction = [TableActions.NEW_ROW, TableActions.EDIT, TableActions.DELETE];
   searchText='';
   column='';
@@ -69,10 +71,16 @@ export class TableComponent implements OnInit {
     }else if(event.action==TableActions.DELETE){
       console.log('elimino riga')
       this.delete(event,event.action, item);
+    }else if(event.action==this.reusableButton){
+      console.log('azione custom ' + event.action);
+      this.customEvent(event, TableActions.CUSTOM, item);
     }
 
 
 
+  }
+  customEvent(event,action:string, item:any){
+    this.action.emit({event,action, item});
   }
 
   create(event,action:string, item:any){
@@ -99,7 +107,8 @@ export class TableComponent implements OnInit {
 export enum TableActions{
   NEW_ROW="NEW_ROW",
   EDIT="EDIT",
-  DELETE="DELETE"
+  DELETE="DELETE",
+  CUSTOM="CUSTOM"
 
 
 }
