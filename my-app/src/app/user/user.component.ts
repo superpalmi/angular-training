@@ -12,6 +12,7 @@ import {Sort} from '@angular/material/sort';
 export class UserComponent implements OnInit {
   rowData: User[]
   users: User[];
+  currentReservations: Reservation[]
 
   headerData = [
 
@@ -21,6 +22,12 @@ export class UserComponent implements OnInit {
     {key:'city' , label: 'City'},
     {key:'role', label: 'Role'},
     ]
+
+  reservationHeaderData = [
+    {key:'id', label:'Id'},
+    {key:'dataInizio', label: 'dataInizio'},
+    {key:'dataFine', label: 'dataFine'}
+  ]
 
 
   constructor(private Auth: AuthappService, private userService: UserService) {
@@ -34,11 +41,10 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.getUsers();
     this.rowData=this.users;
-    console.log(this.rowData)
+    this.currentReservations=this.Auth.getCurrentUser().reservations
   }
 
   sortData(sort: Sort) {
-    console.log('im sorting')
 
     const data = this.users.slice();
     if (!sort.active || sort.direction === '') {
@@ -86,7 +92,7 @@ export const USERS=[
   new User(1, "superpalmi", "1234", "palmi@eri.it", "Milano", "superusers", [{'id':1,'dataInizio': new Date("2020/09/15"), 'dataFine': new Date("2020/09/17")}] ),
   new User(2, "nomonecognomone", "1234", "nomone@cognomone.it", "Napoli", "user", [{'id':3,'dataInizio':new Date("2020/12/24"), 'dataFine': new Date("2020/12/31")}]),
   new User(3, "richipalmi", "1234", "email@email.it", "Roma", "user", []),
-  new User(3, "Riccardo", "1234", "riccardo@email.it", "Roma", "superuser", [])
+  new User(4, "Riccardo", "1234", "riccardo@email.it", "Roma", "superuser", [{'id':4,'dataInizio':new Date("2020/11/24"), 'dataFine': new Date("2020/11/31")}, {'id':5,'dataInizio': new Date("2020/10/15"), 'dataFine': new Date("2020/10/17")}])
 
 ]
 

@@ -8,6 +8,7 @@ import {Sort} from '@angular/material/sort';
 })
 export class TableComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
+  @Input("id") id: string;
   @Input('colData') colData: ColData;
   @Input('rowData') rowData: any;
   @Input('order') order:Order;

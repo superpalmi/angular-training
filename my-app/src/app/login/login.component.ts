@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
        this.route.navigate(['welcome', this.userName]);
        this.msg = 'complimenti ti sei autenticato';
      }else{
+       console.log("username e password sbagliate")
        this.auth = false;
      }
 

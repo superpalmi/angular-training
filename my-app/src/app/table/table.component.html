@@ -3,7 +3,7 @@
   <div class="container">
     <div class="mat-elevation-z8 h-100">
       <div class="input-group container-fluid">
-        <input class="input-group" type="text" id="search"  [(ngModel)]="searchText" placeholder="Ricerca nella colonna" style="width: auto">
+        <input class="input-group" type="text" [(ngModel)]="searchText" placeholder="Ricerca nella colonna" style="width: auto">
         <select class="custom-select" [(ngModel)]="column"  style="width: auto" >
           <option value="" selected disabled hidden>Choose here</option>
           <option *ngFor="let col of search.columns"  >
