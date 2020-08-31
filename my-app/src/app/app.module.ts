@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './common/header/header.component';
+import {VehicleService} from './services/vehicle.service';
 //import { RentalComponent } from './rental/rental.component';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';

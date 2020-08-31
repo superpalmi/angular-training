@@ -1,7 +1,7 @@
 
-<div class="row h-100">
+<div class="row">
   <div class="container">
-    <div class="mat-elevation-z8 h-100">
+    <div>
       <div class="input-group container-fluid">
         <input class="input-group" type="text" id="search"  [(ngModel)]="searchText" placeholder="Ricerca nella colonna" style="width: auto">
         <select class="custom-select" [(ngModel)]="column"  style="width: auto" >
@@ -39,9 +39,7 @@
           <app-button *ngIf="reusableButton!=null" [buttonConfig]="{'customCssClass':'','text':[reusableButton],'icon':'control_point'}" (notify)="setTableAction($event, record)" ></app-button>
 
           <td *ngFor="let col of colData.headers">
-
-            <span>{{record[col.key] | typeselector }}
-            </span>
+            <span>{{record[col.key] | typeselector }}</span>
           </td>
           <td *ngFor="let action of tableAction">
 
