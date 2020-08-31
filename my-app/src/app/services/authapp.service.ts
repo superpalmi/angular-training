@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core';
+import {UserService} from './user.service';
+import {User} from '../user/user.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthappService {
 
-  constructor() { }
+  constructor(private userService:UserService) { }
   // tslint:disable-next-line:typedef
   authentication(userName, password) {
-    if (userName === 'Riccardo' && password === '1234'){
-      sessionStorage.setItem('user', userName);
-      return true;
+    var users=this.userService.getUsers();
+    for(let user of users) {
+      if (userName ===  user.userName && password === user.password){
+        sessionStorage.setItem('user', userName);
+        return true;
 
-    } else {
-      return false;
+      } else {
+        return false;
+      }
+
     }
+
+
+
   }
   // tslint:disable-next-line:typedef
   loggedUser(){

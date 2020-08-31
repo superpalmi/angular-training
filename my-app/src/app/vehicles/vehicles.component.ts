@@ -109,6 +109,7 @@ export class VehiclesComponent implements OnInit {
       }
     }
   }
+  //prenota il veicolo usando la reservation in input
   reserveVehicle(vehicle:Vehicle){
     console.log("sto riservando")
     for(let v of this.rowData){

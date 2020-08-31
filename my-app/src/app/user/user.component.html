@@ -1,1 +1,3 @@
 <h4>Nome utente: {{Auth.loggedUser()}}</h4>
+
+<app-table [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','role']}"   ></app-table>
