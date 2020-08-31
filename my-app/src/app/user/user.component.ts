@@ -15,3 +15,21 @@ export class UserComponent implements OnInit {
   }
 
 }
+export class User{
+  id: number;
+  userName: string;
+  password: string;
+  email: string;
+  city: string;
+  role: string;
+
+  constructor(id: number, userName: string, password: string, email: string, city: string, role:string) {
+    this.id=id;
+    this.userName=userName;
+    this.password=password;
+    this.email=email;
+    this.city=city;
+    this.role=role;
+  }
+
+}

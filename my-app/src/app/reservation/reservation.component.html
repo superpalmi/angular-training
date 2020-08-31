@@ -1,5 +1,5 @@
-
-<div class="container form-control mat-elevation-z8 col-lg-12" style="text-align: center">
+<p>reservation works!</p>
+<div class="container form-control mat-elevation-z8 col-sm-6" style="text-align: center">
 
   <h3>Inserisci le date della prenotazione</h3>
 
@@ -21,14 +21,10 @@
   </div>
   <app-button [buttonConfig]="{'customCssClass':'','text':'Mostra i veicoli disponibili','icon':'directions_car'}" (notify)="listVehicles($event)"></app-button>
   <!--<button class="btn btn-primary"  (click)="gestAuth()">Login</button>-->
+  <div >
+    <app-vehicles *ngIf="reserving==true"  [reservation]="reservation"></app-vehicles>
+
+  </div>
+
 
 </div>
-<br>
-
-<div class="container " style="text-align: center">
-  <app-vehicles *ngIf="reserving==true"  [reservation]="reservation"></app-vehicles>
-
-</div>
-
-
-

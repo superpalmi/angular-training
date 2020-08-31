@@ -3,7 +3,7 @@ import {Sort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {Reservation} from '../reservation/reservation.component';
 import {DatePipe, formatDate} from '@angular/common';
-import {VehicleService} from '../services/vehicle.service';
+import {VehicleReservationService} from '../services/vehicle-reservation.service';
 
 @Component({
   selector: 'app-vehicles',
@@ -12,7 +12,7 @@ import {VehicleService} from '../services/vehicle.service';
 })
 export class VehiclesComponent implements OnInit {
   rowData: Vehicle[]=[];
-  vehicles:Vehicle[];
+  vehicles: Vehicle[];
   newVehicle:Vehicle;
   oldVehicle:Vehicle;
   editVehicle:Vehicle;
@@ -31,18 +31,18 @@ export class VehiclesComponent implements OnInit {
     {key: 'type', label: 'Type'}
   ];
 
+
+  constructor(private route:Router, private vehiclereservationService:VehicleReservationService) { }
   getVehicles(){
-    this.vehicles=this.vehicleService.getVehicles();
+    this.vehicles=this.vehiclereservationService.getVehicles();
   }
-
-
-
-  constructor(private route:Router, private vehicleService:VehicleService) { }
-
   ngOnInit(): void {
 
-    this.checkReservation();
     this.getVehicles();
+
+
+    console.log("questa è una data " + new Date("2020/09/10"))
+    this.checkReservation();
     this.newVehicle=new Vehicle(0, '',new Date("2020/09/30"), '', '', '' , [])
     this.oldVehicle=new Vehicle(0, '', new Date(2020,7,30), '', '', '' , [])
     this.editVehicle=new Vehicle(0, '', new Date(2020,7,30), '', '', '' , [])
@@ -69,7 +69,6 @@ export class VehiclesComponent implements OnInit {
 
 
   checkReservation(){
-
     if(this.reservation!=null){
       for( let vehicle of this.vehicles)
       {
@@ -233,11 +232,12 @@ export class Vehicle{
 
 
 }
+
 export const VEHICLES = [
-  new Vehicle(13, 'Fiat',new Date(2020,7,30) , 'punto' , 'FA585MA', 'berlina', [{'id':1,'dataInizio': new Date("2020/09/15"), 'dataFine': new Date("2020/09/17")}]),
-  new Vehicle(14, 'Fiat', new Date(2020,7,28), 'Freemont' , 'CA444CA', 'suv', [{'id':2,'dataInizio':new Date("2020/10/11"), 'dataFine': new Date("2020/10/20")},{'id':3,'dataInizio':new Date("2020/12/24"), 'dataFine': new Date("2020/12/31")}]),
-  new Vehicle(15, 'Fiat', new Date('2020-07-01'), 'Panda' , 'EA666PA', 'berlina', [])
+    new Vehicle(13, 'Fiat',new Date(2020,7,30) , 'punto' , 'FA585MA', 'berlina', [{'id':1,'dataInizio': new Date("2020/09/15"), 'dataFine': new Date("2020/09/17")}]),
+    new Vehicle(14, 'Fiat', new Date(2020,7,28), 'Freemont' , 'CA444CA', 'suv', [{'id':2,'dataInizio':new Date("2020/10/11"), 'dataFine': new Date("2020/10/20")},{'id':3,'dataInizio':new Date("2020/12/24"), 'dataFine': new Date("2020/12/31")}]),
+    new Vehicle(15, 'Fiat', new Date('2020-07-01'), 'Panda' , 'EA666PA', 'berlina', [])
 
 
-];
+  ];
 

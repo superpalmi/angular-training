@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Vehicle} from '../vehicles/vehicles.component';
-import {VehicleReservationService} from '../services/vehicle.service';
+import {VehicleReservationService} from '../services/vehicle-reservation.service';
 import {DatePipe, formatDate} from '@angular/common';
 
 @Component({
