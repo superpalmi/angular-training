@@ -26,7 +26,9 @@ export class UserComponent implements OnInit {
   reservationHeaderData = [
     {key:'id', label:'Id'},
     {key:'dataInizio', label: 'dataInizio'},
-    {key:'dataFine', label: 'dataFine'}
+    {key:'dataFine', label: 'dataFine'},
+    {key:'plate', label: 'Plate'},
+    {key:'userName', label: 'Username'}
   ]
 
 

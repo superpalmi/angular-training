@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Vehicle} from '../vehicles/vehicles.component';
-import {VehicleReservationService} from '../services/vehicle-reservation.service';
+
+import {Vehicle, VehicleReservationService} from '../services/vehicle-reservation.service';
 import {DatePipe, formatDate} from '@angular/common';
-import {User} from '../user/user.component';
+
 
 @Component({
   selector: 'app-reservation',
@@ -19,7 +19,7 @@ export class ReservationComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.reservation=new Reservation(0, new Date(), new Date(0))
+    this.reservation=new Reservation(0, new Date(), new Date(0), "", "")
   }
 
   listVehicles(event) {
@@ -58,13 +58,20 @@ export class Reservation {
      id: number;
      dataInizio: Date;
     dataFine: Date;
+    plate:string;
+    userName:string;
+
     constructor(id: number,
                 dataInizio: Date,
-                dataFine: Date
+                dataFine: Date,
+                plate:string,
+                userName:string
     ){
       this.id=id;
       this.dataInizio=dataInizio;
       this.dataFine=dataFine;
+      this.plate=plate;
+      this.userName=userName;
     }
 
 }

@@ -94,15 +94,19 @@ export class VehiclesComponent implements OnInit {
       case 'CUSTOM':{
         console.log('reservation')
         this.reserveVehicle(item);
+        break
       }
       case 'NEW_ROW':{
         this.create();
+        break
       }
       case 'EDIT':{
         this.edit(item);
+        break
       }
       case 'DELETE':{
         this.delete(item);
+        break
       }
 
       default:{
@@ -119,6 +123,8 @@ export class VehiclesComponent implements OnInit {
       if(v==vehicle){
         v.reservations.push(this.reservation)
         this.Auth.getCurrentUser().reservations.push(this.reservation)
+        this.reservation.plate=vehicle.plate;
+        this.reservation.userName=this.Auth.getCurrentUser().userName;
         console.log(v.reservations)
         console.log(this.Auth.getCurrentUser().reservations)
         break;
