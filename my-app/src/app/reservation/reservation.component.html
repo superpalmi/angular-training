@@ -1,8 +1,12 @@
 
+<div class="container" *ngIf="isShow">
+  <h3 > Le mie prenotazioni </h3>
+  <app-table [colData]="{'headers':reservationHeaderData}" [id]="'ricerca'" [rowData]="rowData"  [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','dataInizio', 'dataFine', 'plate', 'userName']}"   ></app-table>
+
+</div>
 
 
-
-<div class="container form-control mat-elevation-z8 col-sm-6" style="text-align: center">
+<div class="container form-control mat-elevation-z8 col-sm-6" style="text-align: center" *ngIf="!isShow">
 
   <h3>Inserisci le date della prenotazione</h3>
 

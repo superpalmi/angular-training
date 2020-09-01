@@ -34,7 +34,7 @@ export class VehiclesComponent implements OnInit {
   ];
 
 
-  constructor(private route:Router,private Auth:AuthappService, private vehiclereservationService:VehicleReservationService, private userService:UserService ) { }
+  constructor(public route:Router,public Auth:AuthappService, private vehiclereservationService:VehicleReservationService, private userService:UserService ) { }
   getVehicles(){
     this.vehicles=this.vehiclereservationService.getVehicles();
   }

@@ -3,6 +3,8 @@ import {AuthappService} from '../services/authapp.service';
 import {Reservation} from '../reservation/reservation.component';
 import {User, UserService} from '../services/user.service';
 import {Sort} from '@angular/material/sort';
+import {Vehicle} from '../services/vehicle-reservation.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -13,6 +15,10 @@ export class UserComponent implements OnInit {
   rowData: User[]
   users: User[];
   currentReservations: Reservation[]
+  private isCreation: boolean;
+  private isEditing: boolean;
+  private newUser: User;
+
 
   headerData = [
 
@@ -30,9 +36,14 @@ export class UserComponent implements OnInit {
     {key:'plate', label: 'Plate'},
     {key:'userName', label: 'Username'}
   ]
+  private oldUser: User;
+  private editUser: User;
+  public router:string=''
 
 
-  constructor(private Auth: AuthappService, private userService: UserService) {
+  constructor(public Auth: AuthappService, private userService: UserService, private _router: Router) {
+    this.router = _router.url;
+    console.log(_router.url)
 
   }
   getUsers(){
@@ -44,6 +55,7 @@ export class UserComponent implements OnInit {
     this.getUsers();
     this.rowData=this.users;
     this.currentReservations=this.Auth.getCurrentUser().reservations
+
   }
 
   sortData(sort: Sort) {
@@ -68,6 +80,79 @@ export class UserComponent implements OnInit {
     });
   }
 
+
+  eventHandler(event){
+    var action=event.action;
+    var item=event.item;
+    console.log('sono event handler ' + action)
+    switch(action){
+      case 'NEW_ROW':{
+        this.create();
+        break
+      }
+      case 'EDIT':{
+        this.edit(item);
+        break
+      }
+      case 'DELETE':{
+        this.delete(item);
+        break
+      }
+
+      default:{
+        console.log('switch error');
+        break;
+      }
+    }
+  }
+
+  private create() {
+
+    console.log('aperta crazione utente')
+    this.isCreation=true;
+    this.isEditing=false;
+
+    this.newUser=new User(0, "", "", "", "", "user", [])
+    this.rowData=this.users.slice();
+
+  }
+  insert(){
+    console.log(this.newUser.userName)
+    this.users.push(this.newUser)
+    this.rowData=this.users
+    this.isCreation=false;
+  }
+
+  private edit(user: User) {
+    if(this.rowData.includes(user) && this.Auth.getCurrentUser().role=='superuser'){
+      this.isEditing=true;
+      this.isCreation=false;
+      console.log('sto modificandoooo' + user.userName);
+      this.oldUser=user;
+      this.editUser=this.oldUser
+
+    }
+
+  }
+  modify(){
+    var index = this.users.indexOf(this.oldUser);
+
+    if (index !== -1) {
+      this.users[index] = this.editUser;
+      this.rowData=this.users
+    }
+    this.isEditing=false;
+  }
+
+  private delete(user: User) {
+    console.log("sto per entrare nell'useeer")
+    if(this.rowData.includes(user) && this.Auth.getCurrentUser().role=='superuser'){
+      console.log('sto cancellandooo');
+      var index=this.rowData.indexOf(user);
+      this.rowData.splice(index, 1 );
+    }
+
+  }
 }
 
 

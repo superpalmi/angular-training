@@ -11,6 +11,9 @@ export class VehicleReservationService {
   getVehicles(){
     return VEHICLES
   }
+  getReservations(){
+    return RESERVATIONS
+  }
   checkReservation(reservation: Reservation){
 
   }
@@ -55,3 +58,13 @@ export const VEHICLES = [
 
 
 ];
+
+export const RESERVATIONS =[
+  {'id':1,'dataInizio': new Date("2020/09/15"), 'dataFine': new Date("2020/09/17"), plate: 'FA585MA', userName:'superpalmi'},
+  {'id':2,'dataInizio':new Date("2020/10/11"), 'dataFine': new Date("2020/10/20"), plate:'CA444CA', userName:'nomonecognomone'},
+  {'id':3,'dataInizio':new Date("2020/12/24"), 'dataFine': new Date("2020/12/31"),plate: 'FA585MA', userName:'superpalmi'}
+
+
+]
+
+

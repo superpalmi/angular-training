@@ -94,7 +94,7 @@ export class TableComponent implements OnInit {
   }
   delete(event,action:string, item:any){
     this.action.emit({event,action, item});
-    //this.rowData=this.rowData.filter(it => it.id!=item.id)
+    this.rowData=this.rowData.filter(it => it.id!=item.id)
   }
 
 

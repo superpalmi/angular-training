@@ -1,14 +1,186 @@
+<div class="container" *ngIf="router=='/user'">
 <h4>Nome utente: {{Auth.loggedUser()}} Ruolo: {{Auth.getCurrentUser().role}}</h4>
 <br>
 <div class="container" *ngIf="Auth.getCurrentUser().role=='superuser'">
   <h4>Lista utenti registrati</h4>
 
-  <app-table [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','role']}"   ></app-table>
+  <app-table [colData]="{'headers':headerData}" [rowData]="rowData" (action)="eventHandler($event)" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','role']}"   ></app-table>
 
 </div>
+  <div class="portlet-body form" *ngIf="isCreation&&!isEditing">
+    <h2> Inserisci i dati dell'Utente</h2>
+    <form>
+      {{newUser}}
+      <div class="form-body">
+        <div class="form-group">
+          <label for="id">Id</label>
+          <input id="id" name="id" path="id" type="text" class="form-control" placeholder="Id" [(ngModel)]="newUser.id"/>
+
+        </div>
+
+
+        <div class="form-group">
+          <label for="userName">UserName</label>
+          <input id="userName" name="userName" path="userName" type="text" class="form-control" placeholder="userName"  [(ngModel)]="newUser.userName" />
+
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email"  name="email"  path="email" type="text" class="form-control" placeholder="email"  [(ngModel)]="newUser.email"/>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" name="city" path="city" type="text" class="form-control" placeholder="city"  [(ngModel)]="newUser.city" />
+        </div>
+
+
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" path="role" name="role" class="form-control"  [(ngModel)]="newUser.role">
+            <option value="user" label="user"></option>
+            <option value="superuser" label="superuser" ></option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <app-button *ngIf="isCreation" [buttonConfig]="{'customCssClass':'','text':'Register Vehicle','icon':'directions_car'}" (notify)="insert()"></app-button>
+
+
+  </div>
+  <div class="portlet-body form" *ngIf="isEditing&&!isCreation && Auth.getCurrentUser().role=='superuser'" >
+    <h2> Inserisci i dati del veicolo</h2>
+    <form>
+      {{editUser}}
+      <div class="form-body">
+        <div class="form-group">
+          <label for="id">Id</label>
+          <input id="id" name="id" path="id" type="text" class="form-control" placeholder="Id" [(ngModel)]="editUser.id"/>
+
+        </div>
+
+
+        <div class="form-group">
+          <label for="userName">UserName</label>
+          <input id="userName" name="userName" path="userName" type="text" class="form-control" placeholder="userName"  [(ngModel)]="editUser.userName" />
+
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email"  name="email"  path="email" type="text" class="form-control" placeholder="email"  [(ngModel)]="editUser.email"/>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" name="city" path="city" type="text" class="form-control" placeholder="city"  [(ngModel)]="editUser.city" />
+        </div>
+
+
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" path="role" name="role" class="form-control"  [(ngModel)]="editUser.role">
+            <option value="user" label="user"></option>
+            <option value="superuser" label="superuser" ></option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <app-button *ngIf="isEditing" [buttonConfig]="{'customCssClass':'','text':'Register Vehicle','icon':'directions_car'}" (notify)="modify()"></app-button>
+
+  </div>
 
 <br>
 <h4> Le mie prenotazioni </h4>
-<app-table [colData]="{'headers':reservationHeaderData}" [id]="'ricerca'" [rowData]="currentReservations"  [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','dataInizio', 'dataFine', 'plate', 'userName']}"   ></app-table>
+<app-reservation [reservationHeaderData]="reservationHeaderData" [isShow]="true" [rowData]="currentReservations"></app-reservation>
+</div>
 
 
+
+<div class="container" *ngIf="router=='/register'">
+
+  <div class="portlet-body form" >
+    <h2> Inserisci i dati dell'Utente</h2>
+    <form>
+      {{newUser}}
+      <div class="form-body">
+        <div class="form-group">
+          <label for="id">Id</label>
+          <input id="id" name="id" path="id" type="text" class="form-control" placeholder="Id" [(ngModel)]="newUser.id"/>
+
+        </div>
+
+
+        <div class="form-group">
+          <label for="userName">UserName</label>
+          <input id="userName" name="userName" path="userName" type="text" class="form-control" placeholder="userName"  [(ngModel)]="newUser.userName" />
+
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email"  name="email"  path="email" type="text" class="form-control" placeholder="email"  [(ngModel)]="newUser.email"/>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" name="city" path="city" type="text" class="form-control" placeholder="city"  [(ngModel)]="newUser.city" />
+        </div>
+
+
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" path="role" name="role" class="form-control"  [(ngModel)]="newUser.role">
+            <option value="user" label="user"></option>
+            <option value="superuser" label="superuser" ></option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <app-button *ngIf="isCreation" [buttonConfig]="{'customCssClass':'','text':'Register Vehicle','icon':'directions_car'}" (notify)="insert()"></app-button>
+
+
+  </div>
+  <div class="portlet-body form" *ngIf="isEditing&&!isCreation && Auth.getCurrentUser().role=='superuser'" >
+    <h2> Inserisci i dati del veicolo</h2>
+    <form>
+      {{editUser}}
+      <div class="form-body">
+        <div class="form-group">
+          <label for="id">Id</label>
+          <input id="id" name="id" path="id" type="text" class="form-control" placeholder="Id" [(ngModel)]="editUser.id"/>
+
+        </div>
+
+
+        <div class="form-group">
+          <label for="userName">UserName</label>
+          <input id="userName" name="userName" path="userName" type="text" class="form-control" placeholder="userName"  [(ngModel)]="editUser.userName" />
+
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email"  name="email"  path="email" type="text" class="form-control" placeholder="email"  [(ngModel)]="editUser.email"/>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" name="city" path="city" type="text" class="form-control" placeholder="city"  [(ngModel)]="editUser.city" />
+        </div>
+
+
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" path="role" name="role" class="form-control"  [(ngModel)]="editUser.role">
+            <option value="user" label="user"></option>
+            <option value="superuser" label="superuser" ></option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <app-button *ngIf="isEditing" [buttonConfig]="{'customCssClass':'','text':'Register Vehicle','icon':'directions_car'}" (notify)="modify()"></app-button>
+
+  </div>
+
+
+</div>

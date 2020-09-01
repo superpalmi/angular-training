@@ -34,6 +34,7 @@ import { ReservationComponent } from './reservation/reservation.component';
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
+  {path:'register', component: UserComponent},
   {path: 'reservations', component:ReservationComponent, canActivate:[RouteGuardService]},
   {path: 'welcome/:userName', component: WelcomeComponent, canActivate:[RouteGuardService]},
   {path: 'vehicles', component: VehiclesComponent, canActivate:[RouteGuardService]},
