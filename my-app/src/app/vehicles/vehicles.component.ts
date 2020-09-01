@@ -3,7 +3,7 @@ import {Sort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {Reservation} from '../reservation/reservation.component';
 import {DatePipe, formatDate} from '@angular/common';
-import {VehicleReservationService} from '../services/vehicle-reservation.service';
+import {Vehicle, VehicleReservationService} from '../services/vehicle-reservation.service';
 import {UserService} from '../services/user.service';
 import {AuthappService} from '../services/authapp.service';
 
@@ -129,12 +129,16 @@ export class VehiclesComponent implements OnInit {
   //prepara il componente alla creazione
   create(){
    // this.vehicles.push(new Vehicle(16, 'BMW', new Date('2020-06-01'), 'Serie 3', 'GL666AA', 'berlina'));
-    console.log('aperta crazione veicolo')
-    this.isCreation=true;
-    this.isEditing=false;
+    if(this.Auth.getCurrentUser().role=='superuser'){
+      console.log('aperta crazione veicolo')
+      this.isCreation=true;
+      this.isEditing=false;
 
-    this.newVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '', [] )
-    this.rowData=this.vehicles.slice();
+      this.newVehicle=new Vehicle(0, '', new Date('2020-07-30'), '', '', '', [] )
+      this.rowData=this.vehicles.slice();
+
+    }
+
 
   }
   //inserisce il nuovo veicolo
@@ -147,7 +151,7 @@ export class VehiclesComponent implements OnInit {
   //prepara il componente alla modifica di un elemento
   edit(vehicle:Vehicle){
 
-    if(this.rowData.includes(vehicle)){
+    if(this.rowData.includes(vehicle) && this.Auth.getCurrentUser().role=='superuser'){
       this.isEditing=true;
       this.isCreation=false;
       console.log('sto modificandoooo' + vehicle.plate);
@@ -170,7 +174,7 @@ export class VehiclesComponent implements OnInit {
 
  //elimina il veicolo
   delete(vehicle:Vehicle){
-    if(this.rowData.includes(vehicle)){
+    if(this.rowData.includes(vehicle) && this.Auth.getCurrentUser().role=='superuser'){
       console.log('sto cancellandooo');
       var index=this.rowData.indexOf(vehicle);
        this.rowData.splice(index, 1 );
@@ -208,43 +212,5 @@ function compare(a: number | string | Date, b: number | string | Date, isAsc: bo
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 
-export class Vehicle{
-  public id: number;
-  public brand: string;
-  public immdate: Date;
-  public model: string;
-  public plate: string;
-  public type: string;
-  public reservations: Reservation[];
 
-  constructor(
-    id: number,
-    brand: string,
-   immdate: Date,
-     model: string,
-    plate: string,
-     type: string,
-    reservations: Reservation[],
-  ) {
-    this.id=id;
-    this.brand=brand;
-    this.immdate=immdate;
-    this.model=model;
-    this.plate=plate;
-    this.type=type;
-    this.reservations=reservations;
-  }
-
-
-
-
-}
-
-export const VEHICLES = [
-    new Vehicle(13, 'Fiat',new Date(2020,7,30) , 'punto' , 'FA585MA', 'berlina', [{'id':1,'dataInizio': new Date("2020/09/15"), 'dataFine': new Date("2020/09/17")}]),
-    new Vehicle(14, 'Fiat', new Date(2020,7,28), 'Freemont' , 'CA444CA', 'suv', [{'id':2,'dataInizio':new Date("2020/10/11"), 'dataFine': new Date("2020/10/20")},{'id':3,'dataInizio':new Date("2020/12/24"), 'dataFine': new Date("2020/12/31")}]),
-    new Vehicle(15, 'Fiat', new Date('2020-07-01'), 'Panda' , 'EA666PA', 'berlina', [])
-
-
-  ];
 

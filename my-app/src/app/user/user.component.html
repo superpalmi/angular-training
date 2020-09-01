@@ -1,9 +1,12 @@
-<h4>Nome utente: {{Auth.loggedUser()}}</h4>
+<h4>Nome utente: {{Auth.loggedUser()}} Ruolo: {{Auth.getCurrentUser().role}}</h4>
 <br>
+<div class="container" *ngIf="Auth.getCurrentUser().role=='superuser'">
+  <h4>Lista utenti registrati</h4>
 
-<h4>Lista utenti registrati</h4>
+  <app-table [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','role']}"   ></app-table>
 
-<app-table [colData]="{'headers':headerData}" [rowData]="rowData" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','role']}"   ></app-table>
+</div>
+
 <br>
 <h4> Le mie prenotazioni </h4>
 <app-table [colData]="{'headers':reservationHeaderData}" [id]="'ricerca'" [rowData]="currentReservations"  [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','dataInizio', 'dataFine']}"   ></app-table>
