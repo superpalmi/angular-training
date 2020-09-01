@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import {Reservation} from '../reservation/reservation.component';
 import {DatePipe, formatDate} from '@angular/common';
 import {VehicleReservationService} from '../services/vehicle-reservation.service';
+import {UserService} from '../services/user.service';
+import {AuthappService} from '../services/authapp.service';
 
 @Component({
   selector: 'app-vehicles',
@@ -32,7 +34,7 @@ export class VehiclesComponent implements OnInit {
   ];
 
 
-  constructor(private route:Router, private vehiclereservationService:VehicleReservationService) { }
+  constructor(private route:Router,private Auth:AuthappService, private vehiclereservationService:VehicleReservationService, private userService:UserService ) { }
   getVehicles(){
     this.vehicles=this.vehiclereservationService.getVehicles();
   }
@@ -111,14 +113,18 @@ export class VehiclesComponent implements OnInit {
   }
   //prenota il veicolo usando la reservation in input
   reserveVehicle(vehicle:Vehicle){
+
     console.log("sto riservando")
     for(let v of this.rowData){
       if(v==vehicle){
         v.reservations.push(this.reservation)
+        this.Auth.getCurrentUser().reservations.push(this.reservation)
         console.log(v.reservations)
+        console.log(this.Auth.getCurrentUser().reservations)
         break;
       }
     }
+
   }
   //prepara il componente alla creazione
   create(){

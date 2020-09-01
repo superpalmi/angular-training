@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Vehicle} from '../vehicles/vehicles.component';
 import {VehicleReservationService} from '../services/vehicle-reservation.service';
 import {DatePipe, formatDate} from '@angular/common';
+import {User} from '../user/user.component';
 
 @Component({
   selector: 'app-reservation',
@@ -54,12 +55,12 @@ export class ReservationComponent implements OnInit {
 }
 
 export class Reservation {
-    public id: number;
-    public dataInizio: Date;
-    public dataFine: Date;
+     id: number;
+     dataInizio: Date;
+    dataFine: Date;
     constructor(id: number,
                 dataInizio: Date,
-                dataFine: Date,
+                dataFine: Date
     ){
       this.id=id;
       this.dataInizio=dataInizio;
