@@ -54,7 +54,11 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.getUsers();
     this.rowData=this.users;
-    this.currentReservations=this.Auth.getCurrentUser().reservations
+    this.newUser=new User(0, "", "", "", "", "", [])
+    if(this.Auth.getCurrentUser()!=null){
+      this.currentReservations=this.Auth.getCurrentUser().reservations
+    }
+
 
   }
 

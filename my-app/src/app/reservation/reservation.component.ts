@@ -113,6 +113,7 @@ export class ReservationComponent implements OnInit {
       console.log('sto cancellandooo');
       var index=this.rowData.indexOf(user);
       this.rowData.splice(index, 1 );
+      this.Auth.getCurrentUser().reservations.splice(index,1);
     }
 
   }

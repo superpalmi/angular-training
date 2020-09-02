@@ -1,5 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter, Pipe, ChangeDetectorRef} from '@angular/core';
 import {Sort} from '@angular/material/sort';
+import {AuthappService} from '../services/authapp.service';
 
 @Component({
   selector: 'app-table',
@@ -31,7 +32,7 @@ export class TableComponent implements OnInit {
   }
 
 
-  constructor() { }
+  constructor(private Auth:AuthappService) { }
 
   ngOnInit(): void {
     /*
@@ -44,6 +45,9 @@ export class TableComponent implements OnInit {
 
     this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
     console.log('numero pagine' + this.pages)
+  }
+  refreshPages(){
+    this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
   }
   setCurrentPage(page: number){
     if(page>1){
@@ -89,12 +93,17 @@ export class TableComponent implements OnInit {
   }
   edit(event,action:string, item:any){
     //console.log("ediiiiit 2")
-    this.action.emit({event,action, item});
+    if(this.Auth.getCurrentUser().role=="superuser") {
+      this.action.emit({event, action, item});
+    }
 
   }
   delete(event,action:string, item:any){
-    this.action.emit({event,action, item});
-    this.rowData=this.rowData.filter(it => it.id!=item.id)
+    if(this.Auth.getCurrentUser().role=="superuser"){
+      this.action.emit({event,action, item});
+      this.rowData=this.rowData.filter(it => it.id!=item.id)
+    }
+
   }
 
 

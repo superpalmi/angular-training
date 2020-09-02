@@ -1,7 +1,7 @@
 <div class="container" *ngIf="router=='/user'">
-<h4>Nome utente: {{Auth.loggedUser()}} Ruolo: {{Auth.getCurrentUser().role}}</h4>
+<h4 class="alert-light">Nome utente: {{Auth.loggedUser()}} Email: {{Auth.getCurrentUser().email}} Città: {{Auth.getCurrentUser().city}} Ruolo: {{Auth.getCurrentUser().role}}</h4>
 <br>
-<div class="container" *ngIf="Auth.getCurrentUser().role=='superuser'">
+<div  *ngIf="Auth.getCurrentUser().role=='superuser'">
   <h4>Lista utenti registrati</h4>
 
   <app-table [colData]="{'headers':headerData}" [rowData]="rowData" (action)="eventHandler($event)" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','role']}"   ></app-table>
@@ -10,7 +10,6 @@
   <div class="portlet-body form" *ngIf="isCreation&&!isEditing">
     <h2> Inserisci i dati dell'Utente</h2>
     <form>
-      {{newUser}}
       <div class="form-body">
         <div class="form-group">
           <label for="id">Id</label>
@@ -49,9 +48,8 @@
 
   </div>
   <div class="portlet-body form" *ngIf="isEditing&&!isCreation && Auth.getCurrentUser().role=='superuser'" >
-    <h2> Inserisci i dati del veicolo</h2>
+    <h2> Inserisci i dati dell'utente</h2>
     <form>
-      {{editUser}}
       <div class="form-body">
         <div class="form-group">
           <label for="id">Id</label>
@@ -91,7 +89,6 @@
   </div>
 
 <br>
-<h4> Le mie prenotazioni </h4>
 <app-reservation [reservationHeaderData]="reservationHeaderData" [isShow]="true" [rowData]="currentReservations"></app-reservation>
 </div>
 
@@ -136,7 +133,8 @@
         </div>
       </div>
     </form>
-    <app-button *ngIf="isCreation" [buttonConfig]="{'customCssClass':'','text':'Register Vehicle','icon':'directions_car'}" (notify)="insert()"></app-button>
+
+    <app-button [buttonConfig]="{'customCssClass':'','text':'Registrati','icon':''}" (notify)="insert()"></app-button>
 
 
   </div>

@@ -28,10 +28,12 @@
   </div>
   <app-button [buttonConfig]="{'customCssClass':'','text':'Mostra i veicoli disponibili','icon':'directions_car'}" (notify)="listVehicles($event)"></app-button>
   <!--<button class="btn btn-primary"  (click)="gestAuth()">Login</button>-->
-  <div >
-    <app-vehicles *ngIf="reserving==true"  [reservation]="reservation"></app-vehicles>
 
-  </div>
 
 
 </div>
+
+
+  <app-vehicles *ngIf="reserving==true"  [reservation]="reservation"></app-vehicles>
+
+
