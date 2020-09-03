@@ -29,6 +29,7 @@ import { SearchPipe } from './table/search.pipe';
 import { PaginationPipe } from './table/pagination.pipe';
 import { TypeselectorPipe } from './table/typeselector.pipe';
 import { ReservationComponent } from './reservation/reservation.component';
+import {HttpClientModule} from '@angular/common/http';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
@@ -65,7 +66,8 @@ const routes: Routes = [
     SearchPipe,
     PaginationPipe,
     TypeselectorPipe,
-    ReservationComponent,
+    ReservationComponent
+
     //VehicleComponent
   ],
   // qui importo i moduli per angular
@@ -80,7 +82,8 @@ const routes: Routes = [
     MatSortModule,
     MatPaginatorModule,
     OverlayModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

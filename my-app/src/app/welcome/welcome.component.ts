@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {WelcomeDataService} from '../services/data/welcome-data.service';
 
 @Component({
   selector: 'app-welcome',
@@ -7,10 +8,11 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent implements OnInit {
-  title = 'Benvenuto in car rental';
+  title = 'Interagisci con il backend';
   user = '';
+  msg:any;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private welcomeDataService:WelcomeDataService) { }
 
   // tslint:disable-next-line:typedef
   ngOnInit() {
@@ -18,5 +20,23 @@ export class WelcomeComponent implements OnInit {
     this.user = this.route.snapshot.paramMap.get('userName');
 
   }
+
+  getSaluti() {
+
+
+    this.welcomeDataService.getSaluti(this.user).subscribe(
+      response => this.handleResponse(response)
+    )
+
+
+  }
+
+  handleResponse(response: Object){
+    this.msg=response
+
+  }
+
+
+
 
 }

@@ -1,2 +1,5 @@
 <p>{{title}}</p>
 <p>Benvenuto, {{user}}</p>
+<p *ngIf="msg!=null">dal backend: {{msg}}</p>
+<app-button (notify)="getSaluti()" [buttonConfig]="{'customCssClass':'','text':title,'icon':'input'}" >
+</app-button>

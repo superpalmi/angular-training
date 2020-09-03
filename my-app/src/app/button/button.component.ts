@@ -18,12 +18,8 @@ export class ButtonComponent implements OnInit {
   }
 
   emitAction(event, action:string){
-    console.log('sono button component e questa è action ' + action)
-    if(action!=null){
-      this.notify.emit({event, action});
-    }else this.notify.emit(event);
-
-
+    console.log('hai cliccato il bottone ' + action)
+    this.notify.emit(event);
   }
 
   constructor() { }
