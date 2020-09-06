@@ -19,7 +19,7 @@ export class ButtonComponent implements OnInit {
 
   emitAction(event, action:string){
     console.log('hai cliccato il bottone ' + action)
-    this.notify.emit(event);
+    this.notify.emit({event, action});
   }
 
   constructor() { }

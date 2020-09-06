@@ -66,7 +66,7 @@ export class TableComponent implements OnInit {
 
   setTableAction(event, item:any){
     //console.log('sono entrato in set table action con azione ');
-    //console.log('event action '+ event.action)
+    console.log('event action '+ event.action)
     if(event.action==TableActions.NEW_ROW){
       console.log('inserisco nuova riga')
       this.create(event, event.action, item);

@@ -25,7 +25,8 @@ export class WelcomeComponent implements OnInit {
 
 
     this.welcomeDataService.getSaluti(this.user).subscribe(
-      response => this.handleResponse(response)
+      response => this.handleResponse(response),
+      error=>this.handleError(error)
     )
 
 
@@ -34,6 +35,9 @@ export class WelcomeComponent implements OnInit {
   handleResponse(response: Object){
     this.msg=response
 
+  }
+  handleError(error){
+    this.msg=error.error.message;
   }
 
 

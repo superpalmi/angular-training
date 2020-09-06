@@ -12,6 +12,7 @@ export class AuthappService {
   // tslint:disable-next-line:typedef
   authentication(userName, password) {
     var users=this.userService.getUsers();
+    console.log(users);
     for(let user of users) {
       if (userName ===  user.userName && password === user.password){
         sessionStorage.setItem('user', userName);

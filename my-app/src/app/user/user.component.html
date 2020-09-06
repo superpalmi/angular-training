@@ -4,7 +4,7 @@
 <div  *ngIf="Auth.getCurrentUser().role=='superuser'">
   <h4>Lista utenti registrati</h4>
 
-  <app-table [colData]="{'headers':headerData}" [rowData]="rowData" (action)="eventHandler($event)" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','role']}"   ></app-table>
+  <app-table [colData]="{'headers':headerData}" [rowData]="rowData" (action)="eventHandler($event)" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','phone','role']}"   ></app-table>
 
 </div>
   <div class="portlet-body form" *ngIf="isCreation&&!isEditing">
@@ -31,6 +31,10 @@
         <div class="form-group">
           <label for="city">City</label>
           <input id="city" name="city" path="city" type="text" class="form-control" placeholder="city"  [(ngModel)]="newUser.city" />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" path="phone" type="text" class="form-control" placeholder="phone"  [(ngModel)]="newUser.phone" />
         </div>
 
 
@@ -72,6 +76,11 @@
           <label for="city">City</label>
           <input id="city" name="city" path="city" type="text" class="form-control" placeholder="city"  [(ngModel)]="editUser.city" />
         </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" path="phone" type="text" class="form-control" placeholder="phone"  [(ngModel)]="editUser.phone" />
+        </div>
+
 
 
         <div class="form-group">
@@ -122,6 +131,11 @@
           <label for="city">City</label>
           <input id="city" name="city" path="city" type="text" class="form-control" placeholder="city"  [(ngModel)]="newUser.city" />
         </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" path="phone" type="text" class="form-control" placeholder="phone"  [(ngModel)]="newUser.phone" />
+        </div>
+
 
 
         <div class="form-group">
@@ -164,6 +178,11 @@
           <label for="city">City</label>
           <input id="city" name="city" path="city" type="text" class="form-control" placeholder="city"  [(ngModel)]="editUser.city" />
         </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" path="phone" type="text" class="form-control" placeholder="phone"  [(ngModel)]="editUser.phone" />
+        </div>
+
 
 
         <div class="form-group">

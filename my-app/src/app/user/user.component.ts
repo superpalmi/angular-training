@@ -26,6 +26,7 @@ export class UserComponent implements OnInit {
     {key:'userName', label:'Username'},
     {key:'email', label: 'Email' },
     {key:'city' , label: 'City'},
+    {key:'phone' , label: 'Phone'},
     {key:'role', label: 'Role'},
     ]
 
@@ -54,7 +55,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.getUsers();
     this.rowData=this.users;
-    this.newUser=new User(0, "", "", "", "", "", [])
+    this.newUser=new User(0, "", "", "", "","1234", "", [])
     if(this.Auth.getCurrentUser()!=null){
       this.currentReservations=this.Auth.getCurrentUser().reservations
     }
@@ -78,6 +79,7 @@ export class UserComponent implements OnInit {
         case 'Username': return compare(a.userName, b.userName, isAsc);
         case 'Email': return compare(a.email, b.email, isAsc);
         case 'City': return compare(a.city, b.city, isAsc);
+        case 'Phone': return compare(a.phone, b.phone, isAsc);
         case 'Role': return compare(a.role, b.role, isAsc);
         default: return 0;
       }
@@ -116,14 +118,14 @@ export class UserComponent implements OnInit {
     this.isCreation=true;
     this.isEditing=false;
 
-    this.newUser=new User(0, "", "", "", "", "user", [])
+    this.newUser=new User(0, "", "", "", "","1234", "user", [])
     this.rowData=this.users.slice();
 
   }
   insert(){
     console.log(this.newUser.userName)
-    this.users.push(this.newUser)
-    this.rowData=this.users
+    this.userService.create(this.newUser)
+    this.rowData=this.userService.getUsers()
     this.isCreation=false;
   }
 
