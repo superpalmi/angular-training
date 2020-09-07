@@ -13,7 +13,7 @@ import {Router} from '@angular/router';
 })
 export class UserComponent implements OnInit {
   rowData: User[]
-  users: User[];
+  users: User[]=[]
   currentReservations: Reservation[]
   private isCreation: boolean;
   private isEditing: boolean;
@@ -49,12 +49,16 @@ export class UserComponent implements OnInit {
   }
   getUsers(){
     this.users=this.userService.getUsers()
+
+
+
   }
 
 
   ngOnInit(): void {
     this.getUsers();
     this.rowData=this.users;
+    console.log(this.rowData)
     this.newUser=new User(0, "", "", "", "","1234", "", [])
     if(this.Auth.getCurrentUser()!=null){
       this.currentReservations=this.Auth.getCurrentUser().reservations
@@ -125,7 +129,7 @@ export class UserComponent implements OnInit {
   insert(){
     console.log(this.newUser.userName)
     this.userService.create(this.newUser)
-    this.rowData=this.userService.getUsers()
+    this.rowData=this.users
     this.isCreation=false;
   }
 

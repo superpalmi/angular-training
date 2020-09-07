@@ -7,13 +7,14 @@ import {User, UserService} from './user.service';
 })
 export class AuthappService {
   current:User;
+  users:User[]=[]
 
   constructor(private userService:UserService) { }
   // tslint:disable-next-line:typedef
   authentication(userName, password) {
-    var users=this.userService.getUsers();
-    console.log(users);
-    for(let user of users) {
+    this.getUsers()
+    // @ts-ignore
+    for(let user of this.users) {
       if (userName ===  user.userName && password === user.password){
         sessionStorage.setItem('user', userName);
         this.current=user;
@@ -26,6 +27,16 @@ export class AuthappService {
 
 
   }
+
+  getUsers(){
+    this.users=this.userService.getUsers()
+
+
+
+
+
+  }
+
 
   getCurrentUser(){
     return this.current;

@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
 import {Reservation} from '../reservation/reservation.component';
 import {HttpClient} from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  server='localhost';
+  port='8080';
+  users:User[]=[]
 
   constructor(private httpClient:HttpClient) { }
-  getUsers(){
-    console.log(this.httpClient.get('http://localhost:8080/api/user/showall'))
-    return this.httpClient.get('http://localhost:8080/api/user/showall')
+  getUsers() {
+    this.httpClient.get<User[]>('http://' + this.server + ':' + this.port + '/api/user/showall').subscribe( response => {
+      this.users = response
+
+    })
+    return this.users;
   }
 
   create(user:User){
-    this.httpClient.post('http://localhost:8080/api/user/insert', user)
+    this.httpClient.post('http://'+this.server+':'+this.port+'/api/user/insert', user)
 
 
   }
