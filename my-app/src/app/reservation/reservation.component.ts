@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 import {Vehicle, VehicleReservationService} from '../services/vehicle-reservation.service';
-import {User} from '../services/user.service';
+import {User} from '../services/data/user.service';
 import {AuthappService} from '../services/authapp.service';
 
 

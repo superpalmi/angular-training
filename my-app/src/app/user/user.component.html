@@ -112,7 +112,7 @@
       <div class="form-body">
         <div class="form-group">
           <label for="id">Id</label>
-          <input id="id" name="id" path="id" type="text" class="form-control" placeholder="Id" [(ngModel)]="newUser.id"/>
+          <input id="id" name="id" path="id" type="text" class="form-control " placeholder="Id" [(ngModel)]="newUser.id" disabled/>
 
         </div>
 
@@ -121,6 +121,10 @@
           <label for="userName">UserName</label>
           <input id="userName" name="userName" path="userName" type="text" class="form-control" placeholder="userName"  [(ngModel)]="newUser.userName" />
 
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password"  name="password"  path="password" type="password" class="form-control" placeholder="password"  [(ngModel)]="newUser.password"/>
         </div>
 
         <div class="form-group">

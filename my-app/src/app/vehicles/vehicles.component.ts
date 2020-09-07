@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {Reservation} from '../reservation/reservation.component';
 import {DatePipe, formatDate} from '@angular/common';
 import {Vehicle, VehicleReservationService} from '../services/vehicle-reservation.service';
-import {UserService} from '../services/user.service';
+import {UserService} from '../services/data/user.service';
 import {AuthappService} from '../services/authapp.service';
 
 @Component({

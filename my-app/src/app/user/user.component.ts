@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthappService} from '../services/authapp.service';
 import {Reservation} from '../reservation/reservation.component';
-import {User, UserService} from '../services/user.service';
+import {User, UserService} from '../services/data/user.service';
 import {Sort} from '@angular/material/sort';
 import {Vehicle} from '../services/vehicle-reservation.service';
 import {Router} from '@angular/router';
@@ -59,7 +59,7 @@ export class UserComponent implements OnInit {
     this.getUsers();
     this.rowData=this.users;
     console.log(this.rowData)
-    this.newUser=new User(0, "", "", "", "","1234", "", [])
+    this.newUser=new User(0, "", "", "", "","1234", "", null)
     if(this.Auth.getCurrentUser()!=null){
       this.currentReservations=this.Auth.getCurrentUser().reservations
     }
@@ -122,13 +122,21 @@ export class UserComponent implements OnInit {
     this.isCreation=true;
     this.isEditing=false;
 
-    this.newUser=new User(0, "", "", "", "","1234", "user", [])
+    this.newUser=new User(0, "", "", "", "","1234", "user", null)
     this.rowData=this.users.slice();
 
   }
   insert(){
     console.log(this.newUser.userName)
-    this.userService.create(this.newUser)
+    if(this.newUser.reservations!=null){
+      if(this.newUser.reservations.length==0){
+        console.log("new user" + this.newUser)
+        this.editUser.reservations=null;
+      }
+    }
+
+    this.userService.create(this.newUser).subscribe()
+    //this.getUsers();
     this.rowData=this.users
     this.isCreation=false;
   }
@@ -146,6 +154,13 @@ export class UserComponent implements OnInit {
   }
   modify(){
     var index = this.users.indexOf(this.oldUser);
+    if(this.editUser.reservations.length==0){
+      console.log("edit user" + this.editUser)
+      this.editUser.reservations=null;
+    }
+    this.userService.create(this.editUser).subscribe();
+    //this.getUsers();
+
 
     if (index !== -1) {
       this.users[index] = this.editUser;
@@ -157,6 +172,8 @@ export class UserComponent implements OnInit {
   private delete(user: User) {
     console.log("sto per entrare nell'useeer")
     if(this.rowData.includes(user) && this.Auth.getCurrentUser().role=='superuser'){
+      this.userService.delete(user).subscribe();
+
       console.log('sto cancellandooo');
       var index=this.rowData.indexOf(user);
       this.rowData.splice(index, 1 );
