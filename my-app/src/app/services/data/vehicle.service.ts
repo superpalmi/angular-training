@@ -15,16 +15,8 @@ export class VehicleService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getVehicles() {
-    this.fetchServer();
-    console.log(this.vehicles)
-    return this.vehicles;
-  }
-  fetchServer(){
-    this.httpClient.get<Vehicle[]>('http://' + this.server + ':' + this.port + '/api/vehicle/showall').subscribe( response => {
-      this.vehicles = response
-
-    })
+  getVehicles(): Observable<Vehicle[]> {
+    return this.httpClient.get<Vehicle[]>('http://' + this.server + ':' + this.port + '/api/vehicle/showall')
 
   }
 
@@ -46,27 +38,31 @@ export class VehicleService {
 
 export class Vehicle{
   id: number;
-  brand: string;
-  immdate: Date;
-  model: string;
   plate: string;
+  brand: string;
+  model: string;
+  immdate: Date;
+
+
   type: string;
   reservations: Reservation[];
 
   constructor(
     id: number,
-    brand: string,
-    immdate: Date,
-    model: string,
     plate: string,
+    brand: string,
+    model: string,
+    immdate: Date,
     type: string,
     reservations: Reservation[],
   ) {
     this.id=id;
-    this.brand=brand;
-    this.immdate=immdate;
-    this.model=model;
     this.plate=plate;
+    this.brand=brand;
+    this.model=model;
+    this.immdate=immdate;
+
+
     this.type=type;
     this.reservations=reservations;
   }

@@ -36,7 +36,8 @@ export class ReservationComponent implements OnInit {
     }
   }
   getReservations(){
-    this.reservations=this.reservationService.getReservations()
+    this.reservationService.getReservations().subscribe(response=>this.reservations=response)
+    console.log(this.reservations)
   }
   listVehicles(event) {
     this.reservation.dataInizio=this.parseDate(this.dataInizio);
@@ -98,6 +99,7 @@ export class ReservationComponent implements OnInit {
   }
   modify(){
     var index = this.reservations.indexOf(this.oldReservation);
+    this.reservationService.create(this.newReservation).subscribe()
 
     if (index !== -1) {
       this.reservations[index] = this.editReservation;
@@ -110,6 +112,7 @@ export class ReservationComponent implements OnInit {
     console.log("sto per entrare nell'useeer")
     if(this.rowData.includes(reservation) && this.Auth.getCurrentUser().role=='superuser'){
       console.log('sto cancellandooo');
+      this.reservationService.delete(reservation)
       var index=this.rowData.indexOf(reservation);
       this.rowData.splice(index, 1 );
       this.Auth.getCurrentUser().reservations.splice(index,1);

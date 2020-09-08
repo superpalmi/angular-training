@@ -11,7 +11,7 @@ export class TableComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
   @Input("id") id: string;
   @Input('colData') colData: ColData;
-  @Input('rowData') rowData: any;
+  @Input('rowData') rowData: any[];
   @Input('order') order:Order;
   @Input('search') search:Search;
   @Input('pagination') pagination:Pagination;
@@ -42,12 +42,17 @@ export class TableComponent implements OnInit {
     console.log('numero item'+ this.rowData.length)
     console.log('items per page' + this.pagination.itemPerPage)
     */
-    console.log(this.rowData)
-    this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
-    console.log('numero pagine' + this.pages)
+    if(this.rowData!=null){
+      this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
+      console.log('numero pagine' + this.pages)
+    }
+
   }
   refreshPages(){
-    this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
+    if(this.rowData!=null){
+      this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
+    }
+
   }
   setCurrentPage(page: number){
     if(page>1){

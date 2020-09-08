@@ -15,19 +15,11 @@ export class ReservationService {
   reservation:Reservation;
 
   constructor(private httpClient:HttpClient) { }
-  getReservations(){
-    this.fetchServer();
-    return this.reservations;
-
+  getReservations(): Observable<any[]>{
+    return this.httpClient.get<Reservation[]>('http://' + this.server + ':' + this.port + '/api/reservation/showall')
   }
 
-  fetchServer(){
-    this.httpClient.get<Reservation[]>('http://' + this.server + ':' + this.port + '/api/reservation/showall').subscribe( response => {
-      this.reservations = response
 
-    })
-
-  }
   create(reservation:Reservation):Observable<Reservation>{
     return this.httpClient.post<Reservation>('http://'+this.server+':'+this.port+'/api/reservation/insert', reservation)
 

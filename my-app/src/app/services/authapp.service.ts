@@ -16,6 +16,7 @@ export class AuthappService {
     // @ts-ignore
     for(let user of this.users) {
       if (userName ===  user.userName && password === user.password){
+        console.log("utente loggato " + user);
         sessionStorage.setItem('user', userName);
         this.current=user;
         return true;
@@ -29,7 +30,8 @@ export class AuthappService {
   }
 
   getUsers(){
-    this.users=this.userService.getUsers()
+    this.userService.getUsers().subscribe(response=>this.users=response)
+    console.log(this.users)
 
 
 

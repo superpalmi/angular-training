@@ -14,17 +14,9 @@ export class UserService {
   user:User;
 
   constructor(private httpClient:HttpClient) { }
-  getUsers() {
-    this.fetchServer();
-    console.log(this.users)
-    return this.users;
-  }
-  fetchServer(){
-    this.httpClient.get<User[]>('http://' + this.server + ':' + this.port + '/api/user/showall').subscribe( response => {
-      this.users = response
+  getUsers(): Observable<any[]> {
 
-    })
-
+    return this.httpClient.get<User[]>('http://' + this.server + ':' + this.port + '/api/user/showall')
   }
 
   create(user:User):Observable<User>{

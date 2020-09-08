@@ -47,7 +47,15 @@ export class UserComponent implements OnInit {
 
   }
   getUsers(){
-    this.users=this.userService.getUsers()
+    this.userService.getUsers().subscribe(response=>{this.users=response;
+      console.log(this.users);
+      this.rowData=this.users;
+      console.log(this.rowData)
+      this.newUser=new User(0, "", "", "", "","1234", "", null)
+      if(this.Auth.getCurrentUser()!=null){
+        this.currentReservations=this.Auth.getCurrentUser().reservations
+      }
+  })
 
 
 
@@ -56,12 +64,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
-    this.rowData=this.users;
-    console.log(this.rowData)
-    this.newUser=new User(0, "", "", "", "","1234", "", null)
-    if(this.Auth.getCurrentUser()!=null){
-      this.currentReservations=this.Auth.getCurrentUser().reservations
-    }
+
 
 
   }
