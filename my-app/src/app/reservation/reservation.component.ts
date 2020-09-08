@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-
-import {Vehicle, VehicleReservationService} from '../services/vehicle-reservation.service';
 import {User} from '../services/data/user.service';
 import {AuthappService} from '../services/authapp.service';
+import {Reservation, ReservationService} from '../services/data/reservation.service';
 
 
 @Component({
@@ -25,19 +24,19 @@ export class ReservationComponent implements OnInit {
   private newReservation: Reservation;
   private oldReservation: Reservation;
   private editReservation: Reservation;
-  constructor(public vehicleReserved:VehicleReservationService, private Auth:AuthappService){
+  constructor(private reservationService:ReservationService, private Auth:AuthappService){
 
   }
 
   ngOnInit(): void {
-    this.reservation=new Reservation(0, new Date(), new Date(0), "", "")
+    this.reservation=new Reservation(0, new Date(), new Date(0), null, null)
     this.getReservations()
     if(this.isShow==false){
       this.rowData=this.reservations;
     }
   }
   getReservations(){
-    this.reservations=this.vehicleReserved.getReservations()
+    this.reservations=this.reservationService.getReservations()
   }
   listVehicles(event) {
     this.reservation.dataInizio=this.parseDate(this.dataInizio);
@@ -78,7 +77,7 @@ export class ReservationComponent implements OnInit {
     this.isCreation=true;
     this.isEditing=false;
 
-    this.newReservation=new Reservation(0,new Date(), new Date(), "", "");
+    this.newReservation=new Reservation(0,new Date(), new Date(), null, null);
     this.rowData=this.reservations.slice();
 
   }
@@ -90,7 +89,7 @@ export class ReservationComponent implements OnInit {
     if(this.rowData.includes(reservation) && this.Auth.getCurrentUser().role=='superuser'){
       this.isEditing=true;
       this.isCreation=false;
-      console.log('sto modificandoooo' + reservation.userName);
+      console.log('sto modificandoooo' + reservation.user.userName);
       this.oldReservation=reservation;
       this.editReservation=this.oldReservation
 
@@ -107,11 +106,11 @@ export class ReservationComponent implements OnInit {
     this.isEditing=false;
   }
 
-  private delete(user: User) {
+  private delete(reservation: Reservation) {
     console.log("sto per entrare nell'useeer")
-    if(this.rowData.includes(user) && this.Auth.getCurrentUser().role=='superuser'){
+    if(this.rowData.includes(reservation) && this.Auth.getCurrentUser().role=='superuser'){
       console.log('sto cancellandooo');
-      var index=this.rowData.indexOf(user);
+      var index=this.rowData.indexOf(reservation);
       this.rowData.splice(index, 1 );
       this.Auth.getCurrentUser().reservations.splice(index,1);
     }
@@ -141,24 +140,4 @@ export class ReservationComponent implements OnInit {
 
 }
 
-export class Reservation {
-     id: number;
-     dataInizio: Date;
-    dataFine: Date;
-    plate:string;
-    userName:string;
 
-    constructor(id: number,
-                dataInizio: Date,
-                dataFine: Date,
-                plate:string,
-                userName:string
-    ){
-      this.id=id;
-      this.dataInizio=dataInizio;
-      this.dataFine=dataFine;
-      this.plate=plate;
-      this.userName=userName;
-    }
-
-}

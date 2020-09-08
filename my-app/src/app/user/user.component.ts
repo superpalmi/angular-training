@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthappService} from '../services/authapp.service';
-import {Reservation} from '../reservation/reservation.component';
 import {User, UserService} from '../services/data/user.service';
 import {Sort} from '@angular/material/sort';
-import {Vehicle} from '../services/vehicle-reservation.service';
 import {Router} from '@angular/router';
+import {Reservation} from '../services/data/reservation.service';
 
 @Component({
   selector: 'app-user',

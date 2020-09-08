@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {Router} from '@angular/router';
-import {Reservation} from '../reservation/reservation.component';
 import {DatePipe, formatDate} from '@angular/common';
-import {Vehicle, VehicleReservationService} from '../services/vehicle-reservation.service';
 import {UserService} from '../services/data/user.service';
 import {AuthappService} from '../services/authapp.service';
+import {Vehicle, VehicleService} from '../services/data/vehicle.service';
+import {Reservation} from '../services/data/reservation.service';
 
 @Component({
   selector: 'app-vehicles',
@@ -34,9 +34,9 @@ export class VehiclesComponent implements OnInit {
   ];
 
 
-  constructor(public route:Router,public Auth:AuthappService, private vehiclereservationService:VehicleReservationService, private userService:UserService ) { }
+  constructor(public route:Router,public Auth:AuthappService, private vehicleService:VehicleService, private userService:UserService ) { }
   getVehicles(){
-    this.vehicles=this.vehiclereservationService.getVehicles();
+    this.vehicles=this.vehicleService.getVehicles();
   }
   ngOnInit(): void {
 
@@ -123,8 +123,8 @@ export class VehiclesComponent implements OnInit {
       if(v==vehicle){
         v.reservations.push(this.reservation)
         this.Auth.getCurrentUser().reservations.push(this.reservation)
-        this.reservation.plate=vehicle.plate;
-        this.reservation.userName=this.Auth.getCurrentUser().userName;
+        this.vehicleService.create(v)
+
         console.log(v.reservations)
         console.log(this.Auth.getCurrentUser().reservations)
         break;
