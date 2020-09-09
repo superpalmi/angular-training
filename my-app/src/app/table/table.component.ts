@@ -53,11 +53,14 @@ export class TableComponent implements OnInit {
 
   }
   getNestedObject(data:any, row:string){
-    for(let key in this.customKeys){
-      if(row==this.customKeys[key].key){
-        return _.get(data, [row, this.customKeys[key].child])
+    if(this.customKeys!=null){
+      for(let key in this.customKeys){
+        if(row==this.customKeys[key].key){
+          return _.get(data, [row, this.customKeys[key].child])
+        }
       }
     }
+
     return _.get(data, row);
 
   }

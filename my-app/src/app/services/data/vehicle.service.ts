@@ -29,6 +29,12 @@ export class VehicleService {
     console.log('delete service')
     return this.httpClient.delete('http://'+this.server+':'+this.port+'/api/vehicle/delete/'+vehicle.id)
   }
+
+  getBookableVehicles(res: Reservation): Observable<any>{
+    // @ts-ignore
+    return this.httpClient.get<Reservation[]>('http://'+this.server+':'+this.port+'/api/vehicle/bookable', res)
+
+  }
   getVehicleById(id:number){
     this.httpClient.get<Vehicle>('http://'+this.server+':'+this.port+'/api/vehicle/detail/'+id).subscribe(response =>{
       this.vehicle=response;

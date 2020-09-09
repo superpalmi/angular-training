@@ -19,6 +19,7 @@ export class VehiclesComponent implements OnInit {
   newVehicle:Vehicle;
   oldVehicle:Vehicle;
   editVehicle:Vehicle;
+  bookableVehicles:Vehicle[];
   isCreation=false;
   isEditing=false;
   reserve:string="RESERVE";
@@ -40,11 +41,24 @@ export class VehiclesComponent implements OnInit {
   getVehicles() {
     this.vehicleService.getVehicles().subscribe(response=>{this.vehicles=response;
       console.log(this.vehicles);
-      this.checkReservation();
+      if(this.reservation!=null){
+        this.getBookableVehicles(this.reservation);
+      }else this.rowData=this.vehicles;
+
       this.newVehicle=new Vehicle(0, '', '', '',new Date("2020/09/30"), '' , null)
       this.oldVehicle=new Vehicle(0, '', '', '',new Date("2020/09/30"), '' , null)
       this.editVehicle=new Vehicle(0, '', '', '',new Date("2020/09/30"), '' , null)
     });
+
+  }
+
+  getVehicleReservations(vehicle:Vehicle){
+    this.reservationService.getVehicleReservations(vehicle).subscribe(response=>{
+      vehicle.reservations=response
+      console.log("reservations" + vehicle.reservations)
+    })
+
+
 
   }
   ngOnInit(): void {
@@ -55,46 +69,14 @@ export class VehiclesComponent implements OnInit {
     console.log("questa è una data " + new Date("2020/09/10"))
 
   }
-  isBooked(vehicle:Vehicle){
-    var isBooked:boolean = false;
-    if(vehicle.reservations!=null ){
-      if( vehicle.reservations.length>0) {
-        for (let reservation of Object.values(vehicle.reservations)) {
-          if (((this.reservation.dataInizio < reservation.dataInizio && this.reservation.dataFine < reservation.dataInizio) || (this.reservation.dataInizio > reservation.dataFine && this.reservation.dataFine > reservation.dataFine))) {
-            console.log(this.reservation.dataInizio + ' < ' + reservation.dataInizio)
-            isBooked = false;
-          } else {
-            console.log('prenotazione già esistente' + vehicle.model+ '' +  reservation.dataInizio + ' prenotazione inserita :' + this.reservation.dataInizio )
-            isBooked = true;
 
-          }
-
-
-        }
-    }
-
-    }else return isBooked
-    return isBooked;
-
+  getBookableVehicles(reservation: Reservation){
+    this.vehicleService.getBookableVehicles(reservation).subscribe(response =>{
+      this.bookableVehicles=response;
+      this.rowData=this.bookableVehicles;
+    } )
   }
 
-
-  checkReservation(){
-    if(this.reservation!=null){
-      for( let vehicle of Object.values(this.vehicles))
-      {
-        if(!this.isBooked(vehicle)){
-          console.log('veicolo prenotabile')
-          this.rowData.push(vehicle);
-        }
-
-      }
-    }else{
-      this.rowData=this.vehicles;
-      console.log("rowData" + this.rowData)
-    }
-
-  }
 
   eventHandler(event){
     var action=event.action;
@@ -135,7 +117,7 @@ export class VehiclesComponent implements OnInit {
         this.reservation.vehicle=v;
         this.reservationService.create(this.reservation).subscribe()
         //this.vehicleService.create(v).subscribe();
-        this.msg="Veicolo prenotato, torna nell'area riservata per vedere la prenotazione";
+        this.msg="Veicolo prenotato, torna nell'area utente per vedere la prenotazione";
         console.log(this.reservation)
 
         break;

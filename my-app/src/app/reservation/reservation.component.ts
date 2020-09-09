@@ -30,6 +30,7 @@ export class ReservationComponent implements OnInit {
   private newReservation: Reservation;
   private oldReservation: Reservation;
   private editReservation: Reservation;
+  role:string=''
    router:string = ''
   reservationHeaderData = [
     {key:'id', label:'Id'},
@@ -41,12 +42,14 @@ export class ReservationComponent implements OnInit {
   ]
   constructor(private reservationService:ReservationService, private Auth:AuthappService, private _router: Router){
     this.router=_router.url
+    this.role=Auth.getCurrentUser().role
 
   }
 
   ngOnInit(): void {
     this.reservation=new Reservation(0, new Date(), new Date(0), null, null)
     this.getReservations()
+    this.getUserReservations(this.Auth.getCurrentUser())
 
   }
 
@@ -55,12 +58,22 @@ export class ReservationComponent implements OnInit {
     this.reservationService.getReservations().subscribe(response=>{
       this.reservations=response;
 
-      this.userRowData=this.reservations.filter(reservation => reservation.user = this.Auth.getCurrentUser());
-
+      //this.userRowData=this.reservations.filter(reservation => reservation.user = this.Auth.getCurrentUser());
+      this.rowData=this.reservations;
 
 
     })
 
+  }
+  getUserReservations(user:User){
+    this.reservationService.getUserReservations(user).subscribe(response=>{
+      this.userRowData=response;
+
+
+
+
+
+    })
   }
   listVehicles(event) {
     this.reservation.dataInizio=this.parseDate(this.dataInizio);
@@ -132,10 +145,10 @@ export class ReservationComponent implements OnInit {
   }
 
   private delete(reservation: Reservation) {
-    console.log("sto per entrare nell'useeer")
-    if(this.rowData.includes(reservation) && this.Auth.getCurrentUser().role=='superuser'){
+    console.log("sono prima dell'if")
+    if( this.Auth.getCurrentUser().role=='superuser'){
       console.log('sto cancellandooo');
-      this.reservationService.delete(reservation)
+      this.reservationService.delete(reservation).subscribe()
       var index=this.rowData.indexOf(reservation);
       this.rowData.splice(index, 1 );
       this.Auth.getCurrentUser().reservations.splice(index,1);

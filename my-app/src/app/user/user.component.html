@@ -1,12 +1,12 @@
 <div class="container" *ngIf="router=='/user'">
 <h4 class="alert-light">Nome utente: {{Auth.loggedUser()}} Email: {{Auth.getCurrentUser().email}} Città: {{Auth.getCurrentUser().city}} Ruolo: {{Auth.getCurrentUser().role}}</h4>
 <br>
-<div  *ngIf="Auth.getCurrentUser().role=='superuser'">
-  <h4>Lista utenti registrati</h4>
+  <div  *ngIf="role=='superuser'">
+    <h4>Lista utenti registrati</h4>
 
-  <app-table [colData]="{'headers':headerData}" [rowData]="rowData" (action)="eventHandler($event)" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','phone','role']}"   ></app-table>
+    <app-table [colData]="{'headers':headerData}" [rowData]="rowData" (action)="eventHandler($event)" (notify)="sortData($event)" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','userName', 'email','city','phone','role']}"   ></app-table>
 
-</div>
+  </div>
   <div class="portlet-body form" *ngIf="isCreation&&!isEditing">
     <h2> Inserisci i dati dell'Utente</h2>
     <form>

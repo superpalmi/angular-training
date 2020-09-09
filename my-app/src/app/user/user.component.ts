@@ -33,18 +33,17 @@ export class UserComponent implements OnInit {
   private oldUser: User;
   private editUser: User;
   public router:string=''
+  role: string;
 
 
-  constructor(public Auth: AuthappService, private userService: UserService, private _router: Router) {
+  constructor(private Auth: AuthappService, private userService: UserService, private _router: Router) {
     this.router = _router.url;
-    console.log(_router.url)
+    this.role=Auth.getCurrentUser().role
 
   }
   getUsers(){
     this.userService.getUsers().subscribe(response=>{this.users=response;
-      console.log(this.users);
       this.rowData=this.users;
-      console.log(this.rowData)
       this.newUser=new User(0, "", "", "", "","1234", "", null)
       if(this.Auth.getCurrentUser()!=null){
         this.currentReservations=this.Auth.getCurrentUser().reservations

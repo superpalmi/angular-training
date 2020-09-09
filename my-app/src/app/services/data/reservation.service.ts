@@ -19,15 +19,28 @@ export class ReservationService {
     return this.httpClient.get<Reservation[]>('http://' + this.server + ':' + this.port + '/api/reservation/showall')
   }
 
+  getUserReservations(user: User): Observable<any[]>{
+    return this.httpClient.get<Reservation[]>('http://' + this.server + ':' + this.port + '/api/reservation/personal/'+user.id)
+
+  }
+
+  getVehicleReservations(vehicle: Vehicle): Observable<any[]>{
+    return this.httpClient.get<Reservation[]>('http://' + this.server + ':' + this.port + '/api/reservation/vehicle/'+vehicle.id)
+
+  }
+
+
+
+
 
   create(reservation:Reservation):Observable<Reservation>{
     return this.httpClient.post<Reservation>('http://'+this.server+':'+this.port+'/api/reservation/insert', reservation)
 
 
   }
-  delete(reservation:Reservation): Observable<{}>{
+  delete(reservation:Reservation): Observable<Reservation>{
     console.log('delete service')
-    return this.httpClient.delete('http://'+this.server+':'+this.port+'/api/reservation/delete/'+reservation.id)
+    return this.httpClient.delete<Reservation>('http://'+this.server+':'+this.port+'/api/reservation/delete/'+reservation.id)
   }
   getReservationById(id:number){
     this.httpClient.get<Reservation>('http://'+this.server+':'+this.port+'/api/reservation/detail/'+id).subscribe(response =>{
