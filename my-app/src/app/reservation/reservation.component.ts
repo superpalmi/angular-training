@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../services/data/user.service';
 import {AuthappService} from '../services/authapp.service';
 import {Reservation, ReservationService} from '../services/data/reservation.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -15,29 +16,51 @@ export class ReservationComponent implements OnInit {
   dataFine='';
   reservation:Reservation;
   reserving=false;
+  userRowData:any[]
+  customKey1='vehicle';
+  customKey2='user';
+  customChild1='plate';
+  customChild2='userName';
   @Input("isShow") isShow:boolean = false;
-  @Input("reservationHeaderData") reservationHeaderData:any[]
-  @Input("rowData") rowData:any[]
+
+  rowData:any[]
   reservations:Reservation[]
   private isCreation: boolean;
   private isEditing: boolean;
   private newReservation: Reservation;
   private oldReservation: Reservation;
   private editReservation: Reservation;
-  constructor(private reservationService:ReservationService, private Auth:AuthappService){
+   router:string = ''
+  reservationHeaderData = [
+    {key:'id', label:'Id'},
+    {key:'dataInizio', label: 'dataInizio'},
+    {key:'dataFine', label: 'dataFine'},
+    {key:'vehicle', label: 'Vehicle'},
+    {key:'user', label: 'User'}
+
+  ]
+  constructor(private reservationService:ReservationService, private Auth:AuthappService, private _router: Router){
+    this.router=_router.url
 
   }
 
   ngOnInit(): void {
     this.reservation=new Reservation(0, new Date(), new Date(0), null, null)
     this.getReservations()
-    if(this.isShow==false){
-      this.rowData=this.reservations;
-    }
+
   }
+
+
   getReservations(){
-    this.reservationService.getReservations().subscribe(response=>this.reservations=response)
-    console.log(this.reservations)
+    this.reservationService.getReservations().subscribe(response=>{
+      this.reservations=response;
+
+      this.userRowData=this.reservations.filter(reservation => reservation.user = this.Auth.getCurrentUser());
+
+
+
+    })
+
   }
   listVehicles(event) {
     this.reservation.dataInizio=this.parseDate(this.dataInizio);

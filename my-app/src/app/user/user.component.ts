@@ -29,13 +29,7 @@ export class UserComponent implements OnInit {
     {key:'role', label: 'Role'},
     ]
 
-  reservationHeaderData = [
-    {key:'id', label:'Id'},
-    {key:'dataInizio', label: 'dataInizio'},
-    {key:'dataFine', label: 'dataFine'},
-    {key:'plate', label: 'Plate'},
-    {key:'userName', label: 'Username'}
-  ]
+
   private oldUser: User;
   private editUser: User;
   public router:string=''

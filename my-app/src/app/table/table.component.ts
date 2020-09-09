@@ -1,6 +1,8 @@
 import {Component, OnInit, Input, Output, EventEmitter, Pipe, ChangeDetectorRef} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {AuthappService} from '../services/authapp.service';
+import * as _ from "lodash";
+
 
 @Component({
   selector: 'app-table',
@@ -12,10 +14,11 @@ export class TableComponent implements OnInit {
   @Input("id") id: string;
   @Input('colData') colData: ColData;
   @Input('rowData') rowData: any[];
-  @Input('order') order:Order;
-  @Input('search') search:Search;
-  @Input('pagination') pagination:Pagination;
-  @Input('reusableButton') reusableButton:string;
+  @Input('order') order: Order;
+  @Input('search') search: Search;
+  @Input('pagination') pagination: Pagination;
+  @Input('reusableButton') reusableButton: string;
+  @Input('customKeys') customKeys:any[];
   @Output('notify') notify: EventEmitter<any>=new EventEmitter<any>();
   @Output('action') action: EventEmitter<any>=new EventEmitter<any>();
 
@@ -42,12 +45,24 @@ export class TableComponent implements OnInit {
     console.log('numero item'+ this.rowData.length)
     console.log('items per page' + this.pagination.itemPerPage)
     */
+
     if(this.rowData!=null){
       this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
       console.log('numero pagine' + this.pages)
     }
 
   }
+  getNestedObject(data:any, row:string){
+    for(let key in this.customKeys){
+      if(row==this.customKeys[key].key){
+        return _.get(data, [row, this.customKeys[key].child])
+      }
+    }
+    return _.get(data, row);
+
+  }
+
+
   refreshPages(){
     if(this.rowData!=null){
       this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
