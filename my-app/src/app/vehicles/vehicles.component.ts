@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {DatePipe, formatDate} from '@angular/common';
-import {UserService} from '../services/data/user.service';
+import {User, UserService} from '../services/data/user.service';
 import {AuthappService} from '../services/authapp.service';
 import {Vehicle, VehicleService} from '../services/data/vehicle.service';
 import {Reservation, ReservationService} from '../services/data/reservation.service';
@@ -24,6 +24,7 @@ export class VehiclesComponent implements OnInit {
   isEditing=false;
   reserve:string="RESERVE";
   msg:string='';
+  role:string;
   @Input('reservation') reservation: Reservation;
 
 
@@ -37,7 +38,9 @@ export class VehiclesComponent implements OnInit {
   ];
 
 
-  constructor(public route:Router,public Auth:AuthappService, private vehicleService:VehicleService, private reservationService:ReservationService ) { }
+  constructor(public route:Router,private userService:UserService, private vehicleService:VehicleService, private reservationService:ReservationService ) {
+    this.role=userService.getCurrentUser().role
+  }
   getVehicles() {
     this.vehicleService.getVehicles().subscribe(response=>{this.vehicles=response;
       console.log(this.vehicles);
@@ -113,7 +116,7 @@ export class VehiclesComponent implements OnInit {
     console.log("sto riservando")
     for(let v of this.rowData){
       if(v==vehicle){
-        this.reservation.user=this.Auth.getCurrentUser();
+        this.reservation.user=this.userService.getCurrentUser();
         this.reservation.vehicle=v;
         this.reservationService.create(this.reservation).subscribe()
         //this.vehicleService.create(v).subscribe();
@@ -128,7 +131,7 @@ export class VehiclesComponent implements OnInit {
   //prepara il componente alla creazione
   create(){
    // this.vehicles.push(new Vehicle(16, 'BMW', new Date('2020-06-01'), 'Serie 3', 'GL666AA', 'berlina'));
-    if(this.Auth.getCurrentUser().role=='superuser'){
+    if(this.userService.getCurrentUser().role=='superuser'){
       console.log('aperta crazione veicolo')
       this.isCreation=true;
       this.isEditing=false;
@@ -151,7 +154,7 @@ export class VehiclesComponent implements OnInit {
   //prepara il componente alla modifica di un elemento
   edit(vehicle:Vehicle){
 
-    if(this.rowData.includes(vehicle) && this.Auth.getCurrentUser().role=='superuser'){
+    if(this.rowData.includes(vehicle) && this.userService.getCurrentUser().role=='superuser'){
       this.isEditing=true;
       this.isCreation=false;
       console.log('sto modificandoooo' + vehicle.plate);
@@ -175,7 +178,7 @@ export class VehiclesComponent implements OnInit {
 
  //elimina il veicolo
   delete(vehicle:Vehicle){
-    if(this.rowData.includes(vehicle) && this.Auth.getCurrentUser().role=='superuser'){
+    if(this.rowData.includes(vehicle) && this.userService.getCurrentUser().role=='superuser'){
       this.vehicleService.delete(vehicle).subscribe();
       console.log('sto cancellandooo');
       var index=this.rowData.indexOf(vehicle);

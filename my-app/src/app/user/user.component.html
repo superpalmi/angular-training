@@ -1,5 +1,5 @@
 <div class="container" *ngIf="router=='/user'">
-<h4 class="alert-light">Nome utente: {{Auth.loggedUser()}} Email: {{Auth.getCurrentUser().email}} Città: {{Auth.getCurrentUser().city}} Ruolo: {{Auth.getCurrentUser().role}}</h4>
+<h4 class="alert-light">Nome utente: {{userService.loggedUser()}} Email: {{userService.getCurrentUser().email}} Città: {{userService.getCurrentUser().city}} Ruolo: {{userService.getCurrentUser().role}}</h4>
 <br>
   <div  *ngIf="role=='superuser'">
     <h4>Lista utenti registrati</h4>
@@ -51,7 +51,7 @@
 
 
   </div>
-  <div class="portlet-body form" *ngIf="isEditing&&!isCreation && Auth.getCurrentUser().role=='superuser'" >
+  <div class="portlet-body form" *ngIf="isEditing&&!isCreation && userService.getCurrentUser().role=='superuser'" >
     <h2> Inserisci i dati dell'utente</h2>
     <form>
       <div class="form-body">

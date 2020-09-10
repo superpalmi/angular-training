@@ -9,7 +9,7 @@
 <br>
 <br>
 
-<div class="container" *ngIf="Auth.getCurrentUser().role=='superuser'">
+<div class="container" *ngIf="role=='superuser'">
   <div class="portlet-body form" *ngIf="isCreation&&!isEditing">
     <h2> Inserisci i dati del veicolo</h2>
     <form>

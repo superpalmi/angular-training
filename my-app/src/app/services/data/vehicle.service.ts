@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {User} from './user.service';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {Reservation} from './reservation.service';
+import {AuthappService} from '../authapp.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +14,47 @@ export class VehicleService {
   vehicles:Vehicle[]=[]
   vehicle:Vehicle;
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient:HttpClient, private Auth:AuthappService) { }
+  getBasicAuthHeader(userName:string, password:string){
+    let retval = "Basic "+window.btoa(userName + ":"+ password);
+    return retval;
+  }
 
   getVehicles(): Observable<Vehicle[]> {
-    return this.httpClient.get<Vehicle[]>('http://' + this.server + ':' + this.port + '/api/vehicle/showall')
+    let headers = new HttpHeaders(
+
+      {Authorization: this.getBasicAuthHeader(this.Auth.current.userName, this.Auth.current.password)}
+    )
+    return this.httpClient.get<Vehicle[]>('http://' + this.server + ':' + this.port + '/api/vehicle/showall', {headers})
 
   }
 
   create(vehicle:Vehicle):Observable<Vehicle>{
-    return this.httpClient.post<Vehicle>('http://'+this.server+':'+this.port+'/api/vehicle/insert', vehicle)
+    let headers = new HttpHeaders(
+
+      {Authorization: this.getBasicAuthHeader(this.Auth.current.userName, this.Auth.current.password)}
+    )
+    return this.httpClient.post<Vehicle>('http://'+this.server+':'+this.port+'/api/vehicle/insert', vehicle, {headers})
 
 
   }
   delete(vehicle:Vehicle): Observable<{}>{
+    let headers = new HttpHeaders(
+
+      {Authorization: this.getBasicAuthHeader(this.Auth.current.userName, this.Auth.current.password)}
+    )
     console.log('delete service')
-    return this.httpClient.delete('http://'+this.server+':'+this.port+'/api/vehicle/delete/'+vehicle.id)
+    return this.httpClient.delete('http://'+this.server+':'+this.port+'/api/vehicle/delete/'+vehicle.id, {headers})
   }
 
   getBookableVehicles(res: Reservation): Observable<any>{
     // @ts-ignore
-    return this.httpClient.get<Reservation[]>('http://'+this.server+':'+this.port+'/api/vehicle/bookable', res)
+    let headers = new HttpHeaders(
+
+      {Authorization: this.getBasicAuthHeader(this.Auth.current.userName, this.Auth.current.password)}
+    )
+    // @ts-ignore
+    return this.httpClient.get<Vehicle[]>('http://'+this.server+':'+this.port+'/api/vehicle/bookable', res, {headers})
 
   }
   getVehicleById(id:number){
