@@ -8,32 +8,36 @@ import {User, UserService} from './data/user.service';
 export class AuthappService {
   current:User;
   users:User[]=[]
-  notLoggedUser:User;
-  logged=false;
 
   constructor(private userService:UserService) { }
   // tslint:disable-next-line:typedef
   authentication(userName, password) {
-    this.getUserByUsername(userName, password)
+    this.getUsers()
     // @ts-ignore
-    return this.logged;
+    for(let user of this.users) {
+      if (userName ===  user.userName && password === user.password){
+        console.log("utente loggato " + user);
+        sessionStorage.setItem('user', userName);
+        this.current=user;
+        return true;
+
+      }
+
+    }
 
 
 
   }
 
- getUserByUsername(userName:string, password:string){
-    this.userService.getUserByUserName(userName).subscribe(response=>{
-      this.notLoggedUser=response;
-      if(password==this.notLoggedUser.password){
-        sessionStorage.setItem('user', userName);
-        this.current=this.notLoggedUser;
-        this.logged=true;
+  getUsers(){
+    this.userService.getUsers().subscribe(response=>this.users=response)
+    console.log(this.users)
 
-      }else this.logged=false;
 
-    });
- }
+
+
+
+  }
 
 
   getCurrentUser(){
