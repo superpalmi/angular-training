@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
 import {User} from '../services/data/user.service';
 import {AuthappService} from '../services/authapp.service';
 import {Reservation, ReservationService} from '../services/data/reservation.service';
@@ -11,7 +11,7 @@ import {DatePipe} from '@angular/common';
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css']
 })
-export class ReservationComponent implements OnInit {
+export class ReservationComponent implements OnInit, AfterContentInit {
   msg:string;
   dataInizio=new Date();
   dataFine=new Date();
@@ -48,6 +48,10 @@ export class ReservationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+  }
+  ngAfterContentInit() {
     this.reservation=new Reservation(0, this.datePipe.transform(this.dataInizio,'yyyy-dd-MM'),this.datePipe.transform(this.dataFine,'yyyy-dd-MM'), null, null)
     this.getReservations()
     this.getUserReservations(this.Auth.getCurrentUser())

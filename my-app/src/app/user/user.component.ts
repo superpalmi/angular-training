@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {AuthappService} from '../services/authapp.service';
 import {User, UserService} from '../services/data/user.service';
 import {Sort} from '@angular/material/sort';
@@ -10,7 +10,7 @@ import {Reservation} from '../services/data/reservation.service';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, AfterContentInit {
   rowData: User[]
   users: User[]=[]
   currentReservations: Reservation[]
@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
   private oldUser: User;
   private editUser: User;
   public router:string=''
-  role: string;
+  role: string='';
 
 
   constructor(private Auth: AuthappService, private userService: UserService, private _router: Router) {
@@ -56,10 +56,13 @@ export class UserComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+
+
+
+  }
+  ngAfterContentInit() {
     this.getUsers();
-
-
-
   }
 
   sortData(sort: Sort) {

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, Pipe, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, Pipe, ChangeDetectorRef, AfterViewInit} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {AuthappService} from '../services/authapp.service';
 import * as _ from "lodash";
@@ -9,7 +9,7 @@ import * as _ from "lodash";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, AfterViewInit {
   // tslint:disable-next-line:no-input-rename
   @Input("id") id: string;
   @Input('colData') colData: ColData;
@@ -25,9 +25,10 @@ export class TableComponent implements OnInit {
   tableAction = [TableActions.NEW_ROW, TableActions.EDIT, TableActions.DELETE];
   searchText='';
   column='';
-  columnIndex=0;
-  currentPage=0;
-  pages=0;
+  currentPage=1;
+  pages:number;
+  role=''
+
 
   onClick(event) {
     console.log(event)
@@ -35,7 +36,9 @@ export class TableComponent implements OnInit {
   }
 
 
-  constructor(private Auth:AuthappService) { }
+  constructor(private Auth:AuthappService) {
+
+  }
 
   ngOnInit(): void {
     /*
@@ -45,11 +48,15 @@ export class TableComponent implements OnInit {
     console.log('numero item'+ this.rowData.length)
     console.log('items per page' + this.pagination.itemPerPage)
     */
+    this.pages=1
+    this.refreshPages()
 
-    if(this.rowData!=null){
-      this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
-      console.log('numero pagine' + this.pages)
-    }
+
+
+  }
+  ngAfterViewInit(){
+
+
 
   }
   getNestedObject(data:any, row:string){
@@ -68,7 +75,12 @@ export class TableComponent implements OnInit {
 
   refreshPages(){
     if(this.rowData!=null){
-      this.pages=( Math.ceil(this.rowData.length/this.pagination.itemPerPage));
+      let p= Math.ceil(this.rowData.length/this.pagination.itemPerPage)
+      if(p>1){
+        this.pages=p;
+      }
+
+      console.log('numero pagine' + this.pages)
     }
 
   }
@@ -81,10 +93,6 @@ export class TableComponent implements OnInit {
 
 
     console.log('current page setted to' + this.currentPage)
-  }
-  counter(i: number) {
-    var arr:number[] = new Array(i)
-    return arr;
   }
 
   setTableAction(event, item:any){
@@ -124,7 +132,7 @@ export class TableComponent implements OnInit {
   delete(event,action:string, item:any){
     if(this.Auth.getCurrentUser().role=="superuser"){
       this.action.emit({event,action, item});
-      this.rowData=this.rowData.filter(it => it.id!=item.id)
+
     }
 
   }

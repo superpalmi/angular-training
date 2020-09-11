@@ -32,7 +32,7 @@ export class VehicleService {
 
   getBookableVehicles(res: Reservation): Observable<any>{
     // @ts-ignore
-    return this.httpClient.get<Reservation[]>('http://'+this.server+':'+this.port+'/api/vehicle/bookable/', res)
+    return this.httpClient.post<Reservation>('http://'+this.server+':'+this.port+'/api/vehicle/bookable/',res )
 
   }
   getVehicleById(id:number){

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {DatePipe, formatDate} from '@angular/common';
@@ -13,7 +13,7 @@ import {Observable} from 'rxjs';
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.css']
 })
-export class VehiclesComponent implements OnInit {
+export class VehiclesComponent implements OnInit, AfterViewInit, OnChanges, AfterContentInit {
   rowData: Vehicle[]=[]
   vehicles: Vehicle[]=[];
   newVehicle:Vehicle;
@@ -24,6 +24,7 @@ export class VehiclesComponent implements OnInit {
   isEditing=false;
   reserve:string="RESERVE";
   msg:string='';
+  role=''
   @Input('reservation') reservation: Reservation;
 
 
@@ -37,17 +38,50 @@ export class VehiclesComponent implements OnInit {
   ];
 
 
-  constructor(public route:Router,public Auth:AuthappService, private vehicleService:VehicleService, private reservationService:ReservationService ) { }
-  getVehicles() {
-    this.vehicleService.getVehicles().subscribe(response=>{this.vehicles=response;
-      console.log("get vehicles" + this.vehicles);
 
-      this.rowData=this.vehicles
-      console.log("la data del veicolo" + this.rowData[0].immdate);
-      this.newVehicle=new Vehicle(0, '', '', '','', '' , null)
-      this.oldVehicle=new Vehicle(0, '', '', '','', '' , null)
-      this.editVehicle=new Vehicle(0, '', '', '','', '' , null)
-    });
+  constructor(public route:Router,public Auth:AuthappService, private vehicleService:VehicleService, private reservationService:ReservationService ) {
+    this.role=Auth.getCurrentUser().role
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+  }
+
+
+  ngOnInit(): void {
+    this.getVehicles()
+    this.getBookableVehicles()
+
+
+
+
+
+
+
+
+
+  }
+  ngAfterViewInit() {
+
+
+  }
+  ngAfterContentInit() {
+
+  }
+
+  getVehicles() {
+    if(this.reservation==null){
+      this.vehicleService.getVehicles().subscribe(response=>{this.vehicles=response;
+        console.log("get vehicles" + this.vehicles);
+
+        this.rowData=this.vehicles
+        console.log("la data del veicolo" + this.rowData[0].immdate);
+        this.newVehicle=new Vehicle(0, '', '', '','', '' , null)
+        this.oldVehicle=new Vehicle(0, '', '', '','', '' , null)
+        this.editVehicle=new Vehicle(0, '', '', '','', '' , null)
+      });
+    }
+
 
   }
 
@@ -61,31 +95,22 @@ export class VehiclesComponent implements OnInit {
 
 
   }
-  ngOnInit(): void {
+
+
+  getBookableVehicles(){
     if(this.reservation!=null){
       console.log("la data della reservation" +  this.reservation.dataInizio)
 
 
-      this.getBookableVehicles(this.reservation);
+      this.vehicleService.getBookableVehicles(this.reservation).subscribe(response =>{
+        this.bookableVehicles=response;
+        this.rowData=this.bookableVehicles;
+        console.log("sono getBookableVehicles")
+
+      } )
 
     }
-    if(this.reservation==null){
-      this.getVehicles();
-    }
 
-
-
-
-
-  }
-
-  getBookableVehicles(reservation: Reservation){
-    this.vehicleService.getBookableVehicles(reservation).subscribe(response =>{
-      this.bookableVehicles=response;
-      this.rowData=this.bookableVehicles;
-      console.log("sono getBookableVehicles")
-
-    } )
   }
 
 
@@ -155,14 +180,15 @@ export class VehiclesComponent implements OnInit {
   insert(){
     console.log(this.newVehicle.plate)
     this.vehicleService.create(this.newVehicle).subscribe()
+    this.rowData.push(this.newVehicle)
     this.getVehicles();
-    this.rowData=this.vehicles
+    this.getBookableVehicles()
     this.isCreation=false;
   }
   //prepara il componente alla modifica di un elemento
   edit(vehicle:Vehicle){
 
-    if(this.rowData.includes(vehicle) && this.Auth.getCurrentUser().role=='superuser'){
+    if(this.rowData.includes(vehicle) && this.role=='superuser'){
       this.isEditing=true;
       this.isCreation=false;
       console.log('sto modificandoooo' + vehicle.plate);
@@ -176,6 +202,8 @@ export class VehiclesComponent implements OnInit {
   modify(){
     var index = this.vehicles.indexOf(this.oldVehicle);
     this.vehicleService.create(this.editVehicle).subscribe();
+    this.getVehicles()
+    this.getBookableVehicles()
 
     if (index !== -1) {
       this.vehicles[index] = this.editVehicle;
@@ -191,6 +219,8 @@ export class VehiclesComponent implements OnInit {
       console.log('sto cancellandooo');
       var index=this.rowData.indexOf(vehicle);
        this.rowData.splice(index, 1 );
+       this.getVehicles()
+      this.getBookableVehicles()
     }
 
   }
