@@ -42,22 +42,15 @@ export class VehiclesComponent implements OnInit {
     this.vehicleService.getVehicles().subscribe(response=>{this.vehicles=response;
       console.log("get vehicles" + this.vehicles);
 
-      if(this.reservation!=null){
-        console.log( this.reservation)
-        this.fixDate()
-        this.getBookableVehicles(this.reservation);
-
-      }else this.rowData=this.vehicles
-      this.newVehicle=new Vehicle(0, '', '', '',new Date("2020/09/30"), '' , null)
-      this.oldVehicle=new Vehicle(0, '', '', '',new Date("2020/09/30"), '' , null)
-      this.editVehicle=new Vehicle(0, '', '', '',new Date("2020/09/30"), '' , null)
+      this.rowData=this.vehicles
+      console.log("la data del veicolo" + this.rowData[0].immdate);
+      this.newVehicle=new Vehicle(0, '', '', '','', '' , null)
+      this.oldVehicle=new Vehicle(0, '', '', '','', '' , null)
+      this.editVehicle=new Vehicle(0, '', '', '','', '' , null)
     });
 
   }
-  fixDate(){
-    console.log(this.reservation.dataInizio.toUTCString());
 
-  }
 
   getVehicleReservations(vehicle:Vehicle){
     this.reservationService.getVehicleReservations(vehicle).subscribe(response=>{
@@ -69,11 +62,20 @@ export class VehiclesComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    if(this.reservation!=null){
+      console.log("la data della reservation" +  this.reservation.dataInizio)
 
-    this.getVehicles();
-    console.log("questo è vehicles" + this.vehicles);
 
-    console.log("questa è una data " + new Date("2020/09/10"))
+      this.getBookableVehicles(this.reservation);
+
+    }
+    if(this.reservation==null){
+      this.getVehicles();
+    }
+
+
+
+
 
   }
 
@@ -81,6 +83,7 @@ export class VehiclesComponent implements OnInit {
     this.vehicleService.getBookableVehicles(reservation).subscribe(response =>{
       this.bookableVehicles=response;
       this.rowData=this.bookableVehicles;
+      console.log("sono getBookableVehicles")
 
     } )
   }
@@ -141,7 +144,7 @@ export class VehiclesComponent implements OnInit {
       this.isCreation=true;
       this.isEditing=false;
 
-      this.newVehicle=new Vehicle(0, '', '', '',new Date("2020/09/30"), '' , null )
+      this.newVehicle=new Vehicle(0, '', '', '','', '' , null )
       this.rowData=this.vehicles.slice();
 
     }

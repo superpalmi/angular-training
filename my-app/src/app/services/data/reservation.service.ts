@@ -54,14 +54,14 @@ export class ReservationService {
 
 export class Reservation {
   id: number;
-  dataInizio: Date;
-  dataFine: Date;
+  dataInizio: string
+  dataFine: string;
   vehicle: Vehicle;
   user: User
 
   constructor(id: number,
-              dataInizio: Date,
-              dataFine: Date,
+              dataInizio: string,
+              dataFine: string,
               vehicle: Vehicle,
               user: User
   ){

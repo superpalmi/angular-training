@@ -3,6 +3,7 @@ import {User} from '../services/data/user.service';
 import {AuthappService} from '../services/authapp.service';
 import {Reservation, ReservationService} from '../services/data/reservation.service';
 import {Router} from '@angular/router';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
@@ -12,8 +13,8 @@ import {Router} from '@angular/router';
 })
 export class ReservationComponent implements OnInit {
   msg:string;
-  dataInizio='';
-  dataFine='';
+  dataInizio=new Date();
+  dataFine=new Date();
   reservation:Reservation;
   reserving=false;
   userRowData:any[]
@@ -40,14 +41,14 @@ export class ReservationComponent implements OnInit {
     {key:'user', label: 'User'}
 
   ]
-  constructor(private reservationService:ReservationService, private Auth:AuthappService, private _router: Router){
+  constructor(private reservationService:ReservationService, private Auth:AuthappService, private _router: Router, private datePipe:DatePipe){
     this.router=_router.url
     this.role=Auth.getCurrentUser().role
 
   }
 
   ngOnInit(): void {
-    this.reservation=new Reservation(0, new Date(), new Date(0), null, null)
+    this.reservation=new Reservation(0, this.datePipe.transform(this.dataInizio,'yyyy-dd-MM'),this.datePipe.transform(this.dataFine,'yyyy-dd-MM'), null, null)
     this.getReservations()
     this.getUserReservations(this.Auth.getCurrentUser())
 
@@ -76,9 +77,14 @@ export class ReservationComponent implements OnInit {
     })
   }
   listVehicles(event) {
-    this.reservation.dataInizio=this.parseDate(this.dataInizio);
-    this.reservation.dataFine=this.parseDate(this.dataFine);
+    /*
+    this.reservation.dataInizio=this.parseDate(this.dataInizio.toString());
+    this.reservation.dataFine=this.parseDate(this.dataFine.toString());
+    */
 
+
+
+    //this.reservation.dataInizio=this.datePipe.transform(this.reservation.dataInizio,"yyyy-MM-dd")
     console.log("inserendo prenotazione: " + this.reservation.dataInizio + this.reservation.dataFine)
     this.reserving=true;
 
@@ -114,7 +120,7 @@ export class ReservationComponent implements OnInit {
     this.isCreation=true;
     this.isEditing=false;
 
-    this.newReservation=new Reservation(0,new Date(), new Date(), null, null);
+    this.newReservation=new Reservation(0,'', '', null, null);
     this.rowData=this.reservations.slice();
 
   }
@@ -165,9 +171,14 @@ export class ReservationComponent implements OnInit {
         const year = Number(str[2]);
         const month = Number(str[1]) - 1;
         const date = Number(str[0]);
+        console.log(new Date(year,month, date))
+        console.log(new Date())
+        const timestamp=Date.parse(value);
+        console.log(new Date(timestamp))
 
         return new Date(year, month, date);
       } else if((typeof value === 'string') && value === '') {
+
         return new Date();
       }
       const timestamp = typeof value === 'number' ? value : Date.parse(value);

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './common/header/header.component';
 //import { RentalComponent } from './rental/rental.component';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
@@ -85,7 +85,7 @@ const routes: Routes = [
     CommonModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 

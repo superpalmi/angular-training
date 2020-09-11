@@ -47,7 +47,7 @@ export class Vehicle{
   plate: string;
   brand: string;
   model: string;
-  immdate: Date;
+  immdate: string;
 
 
   type: string;
@@ -58,7 +58,7 @@ export class Vehicle{
     plate: string,
     brand: string,
     model: string,
-    immdate: Date,
+    immdate: string,
     type: string,
     reservations: Reservation[],
   ) {
