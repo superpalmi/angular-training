@@ -33,6 +33,10 @@ export class UserService {
       this.user=response;
     })
   }
+
+  checkUser(userName: string, password: string):Observable<User> {
+    return this.httpClient.post<User>('http://' + this.server + ':' + this.port + '/api/user/check', {userName, password});
+  }
 }
 
 export class User{
