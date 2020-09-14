@@ -26,7 +26,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   searchText='';
   column='';
   currentPage=1;
-  pages:number;
+  pages:number=1;
   role=''
 
 
@@ -48,7 +48,6 @@ export class TableComponent implements OnInit, AfterViewInit {
     console.log('numero item'+ this.rowData.length)
     console.log('items per page' + this.pagination.itemPerPage)
     */
-    this.pages=1
     this.refreshPages()
 
 

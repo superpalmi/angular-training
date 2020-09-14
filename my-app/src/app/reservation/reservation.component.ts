@@ -4,6 +4,7 @@ import {AuthappService} from '../services/authapp.service';
 import {Reservation, ReservationService} from '../services/data/reservation.service';
 import {Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
+import {Sort} from '@angular/material/sort';
 
 
 @Component({
@@ -50,11 +51,12 @@ export class ReservationComponent implements OnInit, AfterContentInit {
   ngOnInit(): void {
 
 
+
   }
   ngAfterContentInit() {
     this.reservation=new Reservation(0, this.datePipe.transform(this.dataInizio,'yyyy-dd-MM'),this.datePipe.transform(this.dataFine,'yyyy-dd-MM'), null, null)
-    this.getReservations()
     this.getUserReservations(this.Auth.getCurrentUser())
+    this.getReservations()
 
   }
 
@@ -72,7 +74,8 @@ export class ReservationComponent implements OnInit, AfterContentInit {
   }
   getUserReservations(user:User){
     this.reservationService.getUserReservations(user).subscribe(response=>{
-      this.userRowData=response;
+      this.reservations=response;
+      this.userRowData=this.reservations
 
 
 
@@ -191,7 +194,46 @@ export class ReservationComponent implements OnInit, AfterContentInit {
 
 
   }
+  sortRowData(sort:Sort, array:string){
+    if(array=='userRowData') {
+      this.userRowData=this.sortData(sort, this.userRowData)
+    }else this.rowData=this.sortData(sort, this.rowData);
+  }
 
+  sortData(sort: Sort, inputData:any []) {
+    console.log('im sorting')
+
+    const data = inputData.slice();
+    if (!sort.active || sort.direction === '') {
+      inputData = data;
+
+      return inputData;
+    }
+
+      inputData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'Id': return compare(a.id,b.id, isAsc);
+        case 'dataInizio': return compare(a.dataInizio, b.dataInizio, isAsc);
+        case 'dataFine': return compare(a.dataFine, b.dataFine, isAsc);
+        case 'Vehicle': return compare(a.vehicle.plate, b.vehicle.plate, isAsc);
+        case 'User': return compare(a.user.userName, b.user.userName, isAsc);
+        default: return 0;
+      }
+    });
+    return inputData
+
+
+
+
+
+  }
+
+}
+
+
+function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 
 
