@@ -6,57 +6,44 @@ import {map} from 'rxjs/operators';
 
 
 
-export class AuthData{
-  constructor(public codice:string,
-              public messaggio:string
-  ) {
-  }
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthappService {
-  current:User;
+  current:User=new User(0, '',"","","","","",null)
   users:User[]=[]
   server='localhost';
   port='8080';
 
   constructor(private userService:UserService, private httpClient:HttpClient) { }
-  // tslint:disable-next-line:typedef
   authentication(userName, password) {
+    let authenticated=false;
 
-    // @ts-ignore
-    this.checkUser(userName, password).subscribe(
+    this.login(userName, password).subscribe(
       response =>{
-        this.current=response;
-        sessionStorage.setItem("user", this.current.userName)
+        this.current=response
+        authenticated=true;
       },
       error => {
         error => {
           console.log(error);
+          authenticated=false;
         }
       }
     )
+    return authenticated
 
 
 
   }
 
-  checkUser(userName:string, password:string): Observable<User>{
-    let headers=new HttpHeaders(
-      { Authorization: "Basic " + window.btoa(userName+":"+password)
-      }
-    )
-    return this.httpClient.post<User>('http://' + this.server + ':' + this.port + '/api/user/check', {headers}).pipe(
-      map(
-        response =>{
-          sessionStorage.setItem("user", userName);
-          return response;
-        }
-      )
-    )
 
+
+  getAuthToken(){
+    if(this.getCurrentUser()){
+      return sessionStorage.getItem("AuthToken")
+    }else return '';
   }
 
   getUsers(){
@@ -87,5 +74,10 @@ export class AuthappService {
 
   clearAll(){
     sessionStorage.removeItem("user");
+  }
+
+  private login(userName: string, password: string): Observable<any> {
+    return this.httpClient.post('http://'+this.server+':'+this.port+'/api/auth/signin', {userName, password})
+
   }
 }

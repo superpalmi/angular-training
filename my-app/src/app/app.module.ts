@@ -86,7 +86,7 @@ const routes: Routes = [
     CommonModule,
     HttpClientModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptService, multi:true}],
   bootstrap: [AppComponent]
 })
 

@@ -35,11 +35,7 @@ export class VehicleService {
     return this.httpClient.post<Reservation>('http://'+this.server+':'+this.port+'/api/vehicle/bookable/',res )
 
   }
-  getVehicleById(id:number){
-    this.httpClient.get<Vehicle>('http://'+this.server+':'+this.port+'/api/vehicle/detail/'+id).subscribe(response =>{
-      this.vehicle=response;
-    })
-  }
+
 }
 
 export class Vehicle{

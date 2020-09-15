@@ -28,14 +28,16 @@ export class UserService {
     console.log('delete service')
     return this.httpClient.delete('http://'+this.server+':'+this.port+'/api/user/delete/'+user.id)
   }
-  getUserById(id:number){
-    this.httpClient.get<User>('http://'+this.server+':'+this.port+'/api/user/detail/'+id).subscribe(response =>{
-      this.user=response;
-    })
-  }
+
 
   checkUser(userName: string, password: string):Observable<User> {
     return this.httpClient.post<User>('http://' + this.server + ':' + this.port + '/api/user/check', {userName, password});
+  }
+
+  getUserByUsername(userName: string): Observable<User> {
+    return this.httpClient.post<User>('http://'+this.server+':'+this.port+'/api/user/getuser', userName);
+
+
   }
 }
 

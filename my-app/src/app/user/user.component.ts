@@ -38,13 +38,17 @@ export class UserComponent implements OnInit, AfterContentInit {
 
   constructor(private Auth: AuthappService, private userService: UserService, private _router: Router) {
     this.router = _router.url;
-    this.role=Auth.getCurrentUser().role
+    if(Auth.getCurrentUser()!=null){
+      this.role=Auth.getCurrentUser().role
+    }
+
 
   }
   getUsers(){
+
     this.userService.getUsers().subscribe(response=>{this.users=response;
       this.rowData=this.users;
-      this.newUser=new User(0, "", "", "", "","1234", "", null)
+
       if(this.Auth.getCurrentUser()!=null){
         this.currentReservations=this.Auth.getCurrentUser().reservations
       }
@@ -56,6 +60,7 @@ export class UserComponent implements OnInit, AfterContentInit {
 
 
   ngOnInit(): void {
+    this.newUser=new User(0, "", "", "", "","1234", "", null)
 
 
 

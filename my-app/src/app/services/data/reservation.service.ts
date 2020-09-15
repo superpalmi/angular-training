@@ -42,11 +42,6 @@ export class ReservationService {
     console.log('delete service')
     return this.httpClient.delete<Reservation>('http://'+this.server+':'+this.port+'/api/reservation/delete/'+reservation.id)
   }
-  getReservationById(id:number){
-    this.httpClient.get<Reservation>('http://'+this.server+':'+this.port+'/api/reservation/detail/'+id).subscribe(response =>{
-      this.reservation=response;
-    })
-  }
 
 
 
