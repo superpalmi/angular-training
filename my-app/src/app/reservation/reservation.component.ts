@@ -14,8 +14,8 @@ import {Sort} from '@angular/material/sort';
 })
 export class ReservationComponent implements OnInit, AfterContentInit {
   msg:string;
-  dataInizio=new Date();
-  dataFine=new Date();
+  dataInizio:string;
+  dataFine:string
   reservation:Reservation;
   reserving=false;
   userRowData:any[]
@@ -54,7 +54,8 @@ export class ReservationComponent implements OnInit, AfterContentInit {
 
   }
   ngAfterContentInit() {
-    this.reservation=new Reservation(0, this.datePipe.transform(this.dataInizio,'yyyy-dd-MM'),this.datePipe.transform(this.dataFine,'yyyy-dd-MM'), null, null)
+    this.reservation=new Reservation(0, this.dataInizio,this.dataFine, null, null)
+    console.log(this.reservation)
     this.getUserReservations(this.Auth.getCurrentUser())
     this.getReservations()
 
@@ -92,7 +93,11 @@ export class ReservationComponent implements OnInit, AfterContentInit {
 
 
     //this.reservation.dataInizio=this.datePipe.transform(this.reservation.dataInizio,"yyyy-MM-dd")
-    console.log("inserendo prenotazione: " + this.reservation.dataInizio + this.reservation.dataFine)
+    console.log("inserendo prenotazione: " + this.dataInizio + this.dataFine)
+    this.reservation.dataInizio=this.datePipe.transform(this.dataInizio,"yyyy-MM-dd");
+    this.reservation.dataFine=this.datePipe.transform(this.dataFine,"yyyy-MM-dd")
+    console.log(this.reservation)
+    this.reservation.user=this.Auth.getCurrentUser()
     this.reserving=true;
 
   }

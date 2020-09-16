@@ -106,6 +106,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit, OnChanges, Afte
         this.bookableVehicles=response;
         this.rowData=this.bookableVehicles;
         console.log("sono getBookableVehicles")
+        if(!this.bookableVehicles){
+          this.msg="non è possibile prenotare un veicolo nelle date selezionate";
+        }
 
       } )
 

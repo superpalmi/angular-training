@@ -27,7 +27,7 @@ export class UserComponent implements OnInit, AfterContentInit {
     {key:'city' , label: 'City'},
     {key:'phone' , label: 'Phone'},
     {key:'role', label: 'Role'},
-    ]
+  ]
 
 
   private oldUser: User;
@@ -40,6 +40,7 @@ export class UserComponent implements OnInit, AfterContentInit {
     this.router = _router.url;
     if(Auth.getCurrentUser()!=null){
       this.role=Auth.getCurrentUser().role
+      console.log(this.role);
     }
 
 
@@ -52,7 +53,7 @@ export class UserComponent implements OnInit, AfterContentInit {
       if(this.Auth.getCurrentUser()!=null){
         this.currentReservations=this.Auth.getCurrentUser().reservations
       }
-  })
+    })
 
 
 
@@ -61,6 +62,7 @@ export class UserComponent implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
     this.newUser=new User(0, "", "", "", "","1234", "", null)
+    this.editUser=new User(0, "", "", "", "","", "", null)
 
 
 
@@ -139,7 +141,7 @@ export class UserComponent implements OnInit, AfterContentInit {
     }
 
     this.userService.create(this.newUser).subscribe()
-    //this.getUsers();
+    this.getUsers();
     this.rowData=this.users
     this.isCreation=false;
   }
@@ -157,18 +159,11 @@ export class UserComponent implements OnInit, AfterContentInit {
   }
   modify(){
     var index = this.users.indexOf(this.oldUser);
-    if(this.editUser.reservations.length==0){
-      console.log("edit user" + this.editUser)
-      this.editUser.reservations=null;
-    }
     this.userService.create(this.editUser).subscribe();
-    //this.getUsers();
+    this.getUsers();
 
 
-    if (index !== -1) {
-      this.users[index] = this.editUser;
-      this.rowData=this.users
-    }
+
     this.isEditing=false;
   }
 
@@ -180,6 +175,7 @@ export class UserComponent implements OnInit, AfterContentInit {
       console.log('sto cancellandooo');
       var index=this.rowData.indexOf(user);
       this.rowData.splice(index, 1 );
+      this.getUsers()
     }
 
   }

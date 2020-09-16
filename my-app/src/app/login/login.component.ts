@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
         this.Auth.setCurrentToken(this.response.token, this.response.type)
         console.log(this.response, this.Auth.getCurrentUser())
         this.route.navigate(['welcome', this.userName]);
+        this.auth=true;
         this.msg = 'complimenti ti sei autenticato';
 
 
@@ -61,6 +62,7 @@ export class LoginComponent implements OnInit {
           console.log(error);
           console.log("username e password sbagliate")
           this.auth = false;
+          this.msg = 'credenziali errate';
 
         }
       }

@@ -43,6 +43,8 @@ export class AuthappService {
 
   setCurrentUser(user:User){
     sessionStorage.setItem('user', user.userName)
+    sessionStorage.setItem('role', user.role)
+    console.log(user.role)
     this.current=user;
   }
 

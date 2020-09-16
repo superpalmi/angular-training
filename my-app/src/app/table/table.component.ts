@@ -26,7 +26,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   searchText='';
   column='';
   currentPage=1;
-  pages:number=1;
+  pages:number
   role=''
 
 
@@ -37,6 +37,9 @@ export class TableComponent implements OnInit, AfterViewInit {
 
 
   constructor(private Auth:AuthappService) {
+    if(sessionStorage.getItem('role')!=null){
+      this.role=sessionStorage.getItem('role')
+    }
 
   }
 
@@ -76,6 +79,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     if(this.rowData!=null){
       let p= Math.ceil(this.rowData.length/this.pagination.itemPerPage)
       if(p>1){
+        console.log(p)
         this.pages=p;
       }
 
@@ -89,6 +93,8 @@ export class TableComponent implements OnInit, AfterViewInit {
       console.log("current page: " + this.currentPage)
       console.log("number of pages: "+ this.pages)
     }else this.currentPage=1;
+
+    this.refreshPages()
 
 
     console.log('current page setted to' + this.currentPage)
