@@ -10,14 +10,19 @@ export class AuthInterceptService implements HttpInterceptor{
   constructor(private Auth:AuthappService) { }
   intercept(request:HttpRequest<any>, next:HttpHandler ){
     let user = this.Auth.getCurrentUser();
-    let authToken=this.Auth.getAuthToken();
+    let authToken=sessionStorage.getItem("token")
+    let authTokenType=sessionStorage.getItem("type")
+    console.log(authToken)
+    let authorization=authTokenType+" "+authToken
+    console.log(authorization)
     if(authToken&&user)
     request=request.clone({
         setHeaders :
           {
-          Authorization: authToken
+          Authorization: authorization
           }
     })
+    console.log(request)
     return next.handle(request)
   }
 }

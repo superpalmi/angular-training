@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthappService} from '../services/authapp.service';
+import {AuthappService, JwtResponse} from '../services/authapp.service';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +8,7 @@ import {AuthappService} from '../services/authapp.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  response:JwtResponse
   userName = '';
   password = '';
   auth = true;
@@ -30,15 +31,40 @@ export class LoginComponent implements OnInit {
        this.auth = false;
     }
     */
-     if (this.Auth.authentication(this.userName, this.password)){
+    this.authentication(this.userName, this.password)
+  }
 
-       this.route.navigate(['welcome', this.userName]);
-       this.msg = 'complimenti ti sei autenticato';
-     }else{
-       console.log("username e password sbagliate")
-       this.auth = false;
-     }
 
+
+
+
+
+
+  authentication(username, password) {
+
+    console.log("sono authentication")
+
+    this.Auth.login(username, password).subscribe(
+      response => {
+        this.response = response
+        this.Auth.setCurrentUser(this.response.user);
+        this.Auth.setCurrentToken(this.response.token, this.response.type)
+        console.log(this.response, this.Auth.getCurrentUser())
+        this.route.navigate(['welcome', this.userName]);
+        this.msg = 'complimenti ti sei autenticato';
+
+
+
+      },
+      error => {
+        error => {
+          console.log(error);
+          console.log("username e password sbagliate")
+          this.auth = false;
+
+        }
+      }
+    )
 
   }
 }
