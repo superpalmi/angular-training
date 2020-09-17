@@ -1,3 +1,10 @@
-<p>Benvenuto, {{user}}</p>
 
-<app-button routerLink="/reservations"  [buttonConfig]="{'customCssClass':'','text':'Prenota un veicolo','icon':'directions_car'}" ></app-button>
+<div *ngIf="user">
+  <p>Benvenuto, {{user.userName}}</p>
+
+  <app-button routerLink="/reservations"  [buttonConfig]="{'customCssClass':'','text':'Prenota un veicolo','icon':'directions_car'}" ></app-button>
+
+
+</div>
+
+<app-button *ngIf="!user" routerLink="/login"  [buttonConfig]="{'customCssClass':'','text':'Fai il login','icon':'login'}"></app-button>

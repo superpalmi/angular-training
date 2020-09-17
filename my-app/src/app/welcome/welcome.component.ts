@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {WelcomeDataService} from '../services/data/welcome-data.service';
+import {AuthappService} from '../services/authapp.service';
+import {User} from '../services/data/user.service';
 
 @Component({
   selector: 'app-welcome',
@@ -9,15 +11,15 @@ import {WelcomeDataService} from '../services/data/welcome-data.service';
 })
 export class WelcomeComponent implements OnInit {
   title = 'Interagisci con il backend';
-  user = '';
+  user:User
   msg:any;
 
-  constructor(private route: ActivatedRoute, private welcomeDataService:WelcomeDataService) { }
+  constructor(private route: ActivatedRoute, private welcomeDataService:WelcomeDataService, private Auth:AuthappService) { }
 
   // tslint:disable-next-line:typedef
   ngOnInit() {
 
-    this.user = this.route.snapshot.paramMap.get('userName');
+    this.user = this.Auth.getCurrentUser()
 
   }
 

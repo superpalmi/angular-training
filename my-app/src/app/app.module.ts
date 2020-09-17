@@ -34,7 +34,7 @@ import {AuthInterceptService} from './services/http/auth-intercept.service';
 
 // qui dichiaro il routing delle pagine associate ai relativi componenti
 const routes: Routes = [
-  {path: '', component: LoginComponent},
+  {path: '', component: WelcomeComponent},
   {path: 'login', component: LoginComponent},
   {path:'register', component: UserComponent},
   {path: 'reservations', component:ReservationComponent, canActivate:[RouteGuardService]},

@@ -1,12 +1,13 @@
 
 <div class="container" *ngIf="isShow&&router!='reservations'" >
   <h3 > Le mie prenotazioni </h3>
-  <app-table [colData]="{'headers':reservationHeaderData}" (action)="eventHandler($event)" [id]="'ricerca'" [rowData]="userRowData" [customKeys]="[{key:'vehicle', child:'plate'},{key:'user', child:'userName'}]" (notify)="sortRowData($event, 'userRowData')"  [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','dataInizio', 'dataFine', 'plate', 'userName']}"   ></app-table>
+  <app-table [colData]="{'headers':reservationHeaderData}" (action)="eventHandler($event)" [id]="'ricerca'" [rowData]="userRowData" [customKeys]="[{key:'vehicle', child:'plate'},{key:'user', child:'userName'}]" (notify)="sortRowData($event, 'userRowData')"  [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','dataInizio', 'dataFine', 'vehicle', 'user']}"   ></app-table>
 
 </div>
+<br/>
 <div class="container" *ngIf="isShow&&router!='reservations'&&role=='superuser'" >
-  <h3 > Prenotazioni degli utenti </h3>
-  <app-table [colData]="{'headers':reservationHeaderData}" (action)="eventHandler($event)" [id]="'ricerca'" [rowData]="rowData" [customKeys]="[{key:'vehicle', child:'plate'},{key:'user', child:'userName'}]"  (notify)="sortRowData($event, 'rowData')" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','dataInizio', 'dataFine', 'plate', 'userName']}"   ></app-table>
+  <h3> Prenotazioni degli utenti </h3>
+  <app-table [colData]="{'headers':reservationHeaderData}" (action)="eventHandler($event)" [id]="'ricerca'" [rowData]="rowData" [customKeys]="[{key:'vehicle', child:'plate'},{key:'user', child:'userName'}]"  (notify)="sortRowData($event, 'rowData')" [order]="{'defaultColumn':'Id', 'orderType':'desc'}" [pagination]="{'itemPerPage':5, 'itemPerPageOptions':[5,10,20]}" [search]="{columns:['id','dataInizio', 'dataFine', 'vehicle', 'user']}"   ></app-table>
 
 </div>
 

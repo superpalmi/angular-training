@@ -19,10 +19,6 @@ export class ReservationComponent implements OnInit, AfterContentInit {
   reservation:Reservation;
   reserving=false;
   userRowData:any[]
-  customKey1='vehicle';
-  customKey2='user';
-  customChild1='plate';
-  customChild2='userName';
   @Input("isShow") isShow:boolean = false;
 
   rowData:any[]
@@ -44,7 +40,10 @@ export class ReservationComponent implements OnInit, AfterContentInit {
   ]
   constructor(private reservationService:ReservationService, private Auth:AuthappService, private _router: Router, private datePipe:DatePipe){
     this.router=_router.url
-    this.role=Auth.getCurrentUser().role
+    if(Auth.getCurrentUser()){
+      this.role=Auth.getCurrentUser().role
+    }
+
 
   }
 

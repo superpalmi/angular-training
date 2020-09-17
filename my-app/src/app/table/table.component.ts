@@ -23,7 +23,8 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output('action') action: EventEmitter<any>=new EventEmitter<any>();
 
   tableAction = [TableActions.NEW_ROW, TableActions.EDIT, TableActions.DELETE];
-  searchText='';
+  filterData:any;
+  searchText=''
   column='';
   currentPage=1;
   pages:number=1
@@ -42,6 +43,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     }
 
   }
+
 
   ngOnInit(): void {
     /*
@@ -78,7 +80,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   refreshPages(){
 
-   
+
 
     if(this.rowData!=null){
       if(this.rowData.length>1){

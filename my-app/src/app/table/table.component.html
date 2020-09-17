@@ -39,7 +39,7 @@
         <tbody>
 
         <tr *ngFor="let record of rowData | search : searchText : column | pagination: pagination.itemPerPage : currentPage :pages">
-          <app-button *ngIf="reusableButton!=null" [buttonConfig]="{'customCssClass':'','text':[reusableButton],'icon':'control_point'}" (notify)="setTableAction($event, record)" ></app-button>
+          <app-button class="buttontab" *ngIf="reusableButton!=null" [buttonConfig]="{'customCssClass':'','text':[reusableButton],'icon':'control_point'}" (notify)="setTableAction($event, record)" ></app-button>
 
           <td *ngFor="let col of colData.headers">
 
@@ -53,9 +53,9 @@
           </td>
           <td *ngFor="let action of tableAction">
 
-            <app-button *ngIf="action=='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}"  (notify)="setTableAction($event, null)"></app-button>
+            <app-button class="buttontab" *ngIf="action=='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}"  (notify)="setTableAction($event, null)"></app-button>
 
-            <app-button *ngIf="action!='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}" (notify)="setTableAction($event, record)"></app-button>
+            <app-button class="buttontab" *ngIf="action!='NEW_ROW'" [buttonConfig]="{'customCssClass':'','text':action,'icon':'control_point'}" (notify)="setTableAction($event, record)"></app-button>
           </td>
 
         </tr>
