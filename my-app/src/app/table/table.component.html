@@ -70,8 +70,8 @@
         <div class="text-center">
           <label ngDefaultControl  [(ngModel)]="pagination.itemPerPage">Scegli il numero di elementi per pagina da visualizzare:</label>
 
-          <select  ngDefaultControl [(ngModel)]="pagination.itemPerPage" >
-            <option *ngFor="let item of pagination.itemPerPageOptions" >{{item}} {{refreshPages()}}</option>
+          <select  ngDefaultControl [(ngModel)]="pagination.itemPerPage" (ngModelChange)="refreshPages()" >
+            <option *ngFor="let item of pagination.itemPerPageOptions" >{{item}}</option>
           </select>
 
           <!-- pager -->
@@ -94,11 +94,11 @@
             <li class="page-item" *ngIf="pages>2 && currentPage<pages-1">
             <a class="page-link" (click)="setCurrentPage(currentPage+2)">{{currentPage+2}}</a>
             </li>
-            <li class="page-item" *ngIf="pages>1 && currentPage<pages" >
+            <li class="page-item"  *ngIf="pages>1 && currentPage<pages">
               <a class="page-link" (click)="setCurrentPage(currentPage + 1)">Next</a>
             </li>
-            <li class="page-item disabled" *ngIf="currentPage==pages || pages==1">
-              <a class="page-link" (click)="setCurrentPage(currentPage + 1)">Next</a>
+            <li class="page-item  disabled" >
+              <a class="page-link" *ngIf="currentPage>1 && currentPage==pages"  (click)="setCurrentPage(currentPage + 1)">Next</a>
             </li>
             <li class="page-item" *ngIf="pages>1">
               <a class="page-link" (click)="setCurrentPage(pages)">Last</a>

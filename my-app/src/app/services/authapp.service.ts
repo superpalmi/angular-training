@@ -77,7 +77,10 @@ export class AuthappService {
   }
 
   clearAll(){
-    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("user")
+    sessionStorage.removeItem("token")
+    sessionStorage.removeItem("type")
+    sessionStorage.removeItem("role")
   }
   login(username: string, password: string): Observable<any> {
     return this.httpClient.post('http://'+this.server+':'+this.port+'/api/auth/signin', {username, password})

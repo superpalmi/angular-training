@@ -1,5 +1,3 @@
-<p>{{title}}</p>
 <p>Benvenuto, {{user}}</p>
-<p *ngIf="msg!=null">dal backend: {{msg}}</p>
-<app-button (notify)="getSaluti()" [buttonConfig]="{'customCssClass':'','text':title,'icon':'input'}" >
-</app-button>
+
+<app-button routerLink="/reservations"  [buttonConfig]="{'customCssClass':'','text':'Prenota un veicolo','icon':'directions_car'}" ></app-button>

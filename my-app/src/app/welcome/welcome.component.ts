@@ -21,16 +21,7 @@ export class WelcomeComponent implements OnInit {
 
   }
 
-  getSaluti() {
 
-
-    this.welcomeDataService.getSaluti(this.user).subscribe(
-      response => this.handleResponse(response),
-      error=>this.handleError(error)
-    )
-
-
-  }
 
   handleResponse(response: Object){
     this.msg=response

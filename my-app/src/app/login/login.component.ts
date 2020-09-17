@@ -58,13 +58,11 @@ export class LoginComponent implements OnInit {
 
       },
       error => {
-        error => {
-          console.log(error);
-          console.log("username e password sbagliate")
+
           this.auth = false;
           this.msg = 'credenziali errate';
 
-        }
+
       }
     )
 

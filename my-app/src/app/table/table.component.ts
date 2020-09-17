@@ -26,7 +26,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   searchText='';
   column='';
   currentPage=1;
-  pages:number
+  pages:number=1
   role=''
 
 
@@ -51,6 +51,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     console.log('numero item'+ this.rowData.length)
     console.log('items per page' + this.pagination.itemPerPage)
     */
+    this.pages=2
     this.refreshPages()
 
 
@@ -76,12 +77,19 @@ export class TableComponent implements OnInit, AfterViewInit {
 
 
   refreshPages(){
+    let p= Math.ceil(this.rowData.length/this.pagination.itemPerPage)
+    console.log("row data: "+ this.rowData.length + "items per page " + this.pagination.itemPerPage)
+
     if(this.rowData!=null){
-      let p= Math.ceil(this.rowData.length/this.pagination.itemPerPage)
-      if(p>1){
-        console.log(p)
-        this.pages=p;
-      }
+      if(this.rowData.length>1){
+        console.log("row data: "+ this.rowData.length + "items per page " + this.pagination.itemPerPage)
+
+        if(p>1){
+          console.log(p)
+          this.pages=p;
+        }
+
+      }else this.pages=2;
 
       console.log('numero pagine' + this.pages)
     }

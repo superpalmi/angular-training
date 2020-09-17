@@ -24,6 +24,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit, OnChanges, Afte
   isEditing=false;
   reserve:string="RESERVE";
   msg:string='';
+  alertmsg:string='';
   role=''
   @Input('reservation') reservation: Reservation;
 
@@ -40,7 +41,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit, OnChanges, Afte
 
 
   constructor(public route:Router,public Auth:AuthappService, private vehicleService:VehicleService, private reservationService:ReservationService ) {
-    this.role=Auth.getCurrentUser().role
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -49,6 +50,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit, OnChanges, Afte
 
 
   ngOnInit(): void {
+    if(sessionStorage.getItem('role')!=null){
+      this.role=sessionStorage.getItem('role')
+    }
     this.getVehicles()
     this.getBookableVehicles()
 
@@ -105,9 +109,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit, OnChanges, Afte
       this.vehicleService.getBookableVehicles(this.reservation).subscribe(response =>{
         this.bookableVehicles=response;
         this.rowData=this.bookableVehicles;
-        console.log("sono getBookableVehicles")
-        if(!this.bookableVehicles){
-          this.msg="non è possibile prenotare un veicolo nelle date selezionate";
+        console.log("sono getBookableVehicles"+this.bookableVehicles.length)
+        if(this.bookableVehicles.length==0){
+          this.alertmsg="non è possibile prenotare un veicolo nelle date selezionate";
         }
 
       } )
