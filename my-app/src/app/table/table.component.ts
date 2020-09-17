@@ -77,13 +77,13 @@ export class TableComponent implements OnInit, AfterViewInit {
 
 
   refreshPages(){
-    let p= Math.ceil(this.rowData.length/this.pagination.itemPerPage)
-    console.log("row data: "+ this.rowData.length + "items per page " + this.pagination.itemPerPage)
+
+   
 
     if(this.rowData!=null){
       if(this.rowData.length>1){
         console.log("row data: "+ this.rowData.length + "items per page " + this.pagination.itemPerPage)
-
+        let p= Math.ceil(this.rowData.length/this.pagination.itemPerPage)
         if(p>1){
           console.log(p)
           this.pages=p;
