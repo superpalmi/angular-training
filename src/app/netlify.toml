@@ -1,0 +1,9 @@
+[build]
+  command = "ng build"
+  publish = "/src/app"
+  base = "/"
+
+[[redirects]]
+  from = "/*"
+  to = "/app.component.html"
+  status = 200

@@ -533,9 +533,9 @@ module.exports = content.locals || {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\SI2001\IdeaProjects\Angular\udemy-ng\angular-repository\my-app\node_modules\@angular\material\prebuilt-themes\deeppurple-amber.css */"./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css");
-__webpack_require__(/*! C:\Users\SI2001\IdeaProjects\Angular\udemy-ng\angular-repository\my-app\src\styles.scss */"./src/styles.scss");
-module.exports = __webpack_require__(/*! C:\Users\SI2001\IdeaProjects\Angular\udemy-ng\angular-repository\my-app\node_modules\bootstrap\dist\css\bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
+__webpack_require__(/*! C:\Users\SI2001\IdeaProjects\Angular\udemy-ng\angular-repository\node_modules\@angular\material\prebuilt-themes\deeppurple-amber.css */"./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css");
+__webpack_require__(/*! C:\Users\SI2001\IdeaProjects\Angular\udemy-ng\angular-repository\src\styles.scss */"./src/styles.scss");
+module.exports = __webpack_require__(/*! C:\Users\SI2001\IdeaProjects\Angular\udemy-ng\angular-repository\node_modules\bootstrap\dist\css\bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
 
 
 /***/ })
